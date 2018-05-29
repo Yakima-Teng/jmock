@@ -34,6 +34,7 @@ jspm_packages
 .npm
 
 # Optional REPL history
+.DS_Store
 .node_repl_history
 /config/index.js
 /public
