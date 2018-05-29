@@ -1,6 +1,19 @@
 # jMock
 
-jMock是一个用js书写的mock server，用于服务器端数据模拟，方便前端工程师独立于后端进行开发。支持跨域访问，支持post大文件（不会在硬盘上进行存储）。
+<p align="center">
+  <a href="https://npmcharts.com/compare/jmock?minimal=true">
+    <img src="https://img.shields.io/npm/dm/jmock.svg" alt="Downloads">
+  </a>
+  <a href="https://www.npmjs.com/package/jmock">
+    <img src="https://img.shields.io/npm/v/jmock.svg" alt="Version">
+  </a>
+  <a href="https://www.npmjs.com/package/jmock">
+    <img src="https://img.shields.io/npm/l/jmock.svg" alt="License">
+  </a>
+</p>
+
+> jMock是一个用js书写的mock server，用于服务器端数据模拟，方便前端工程师独立于后端进行开发。支持跨域访问，支持post大文件（不会在硬盘上进行存储）。
+
 
 本程序根据个人的实际使用情况在操作的简便性和功能的丰富性之间做了适当的取舍，“返回静态JSON数据”时不对请求方式（POST、GET这种）进行区分，只针对请求地址进行响应（因为同一个接口地址不同请求方式的情况个人项目中很少见）。如果想要根据根据请求方式进行区别响应，可采用“返回JS自定义数据”或“请求代理”的方式。
 
