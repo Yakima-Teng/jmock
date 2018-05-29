@@ -1,12 +1,12 @@
-# mock-server
+# jMock
 
-服务器端数据模拟，方便前端工程师独立于后端进行开发。支持跨域访问，支持post大文件（不会在硬盘上进行存储）。
+jMock是一个用js书写的mock server，用于服务器端数据模拟，方便前端工程师独立于后端进行开发。支持跨域访问，支持post大文件（不会在硬盘上进行存储）。
 
 本程序根据个人的实际使用情况在操作的简便性和功能的丰富性之间做了适当的取舍，“返回静态JSON数据”时不对请求方式（POST、GET这种）进行区分，只针对请求地址进行响应（因为同一个接口地址不同请求方式的情况个人项目中很少见）。如果想要根据根据请求方式进行区别响应，可采用“返回JS自定义数据”或“请求代理”的方式。
 
-适用于前端为http请求，后端返回json数据的场景。
+适用于前端为http、https请求，后端返回json数据的场景。
 
-说明：本文档中“配置文件”指的是config目录下的index.js文件
+说明：本文档中“配置文件”指的是config目录下的index.js文件。
 
 说明：服务器启动时会自动打开一个说明文档页面，若需取消，请修改配置文件中config.showReadMe的值为false。
 
@@ -16,21 +16,38 @@
 
 Established by Yakima Teng
 
-## 使用前
+## 安装
 
-首先，安装程序所需的依赖包，若网速不佳，请使用淘宝在国内的npm镜像服务。
-```
-npm install
-```
-
-等待依赖安装的同时，在config目录下新建一个index.js配置文件，将同级目录下index_sample.js文件的内容复制到index.js文件中。
-
-然后，待程序所需的依赖包安装结束后，在项目根目录打开命令行工具，运行以下命令：
-```
-npm run dev
+1、全局安装jMock以便在命令行工具中使用：
+```bash
+npm i -g jmock
 ```
 
-## 请求代理
+2、在项目中安装jmock文件
+```bash
+cd project-path
+jmock init
+```
+
+3、进入jmock目录，安装项目依赖
+```
+cd jmock
+npm i
+```
+
+4、书写配置文件
+
+在`jmock/config/`目录下新建`index.js`文件，内容参考`jmock/config/index_sample.js`文件的内容。
+
+5、启动mock server
+```bash
+jmock start
+```
+
+## 配置文件规则说明
+
+
+### 请求代理
 
 修改配置文件中的config.proxyTable即可。示例如下：
 
@@ -54,7 +71,8 @@ proxyTable: {
 
 说明：程序会自动对代理请求返回的结果进行备份，备份目录为/mock/proxy，生成的文件名是根据请求地址自动生成的。大部分时候不需要搭理这些备份文件。
 
-## 返回JSON静态数据
+
+### 返回JSON静态数据
 
 修改配置文件中的config.jsonTable即可。示例配置如下：
 
@@ -78,7 +96,8 @@ jsonTable: [
 
 小技巧：可以将程序在/mock/proxy目录下生成的备份文件拷贝至此处使用。
 
-## 返回JS自定义数据
+
+### 返回JS自定义数据
 
 修改配置文件中的config.customTable即可。示例配置如下：
 
@@ -96,7 +115,7 @@ customTable: [
 
 说明：之所以在自定义js文件中导出函数而非直接导出数据，是为了便于服务器返回随机数据。
 
-说明：程序内置了mockjs模块（[官方文档](http://mockjs.com/)），可以直接使用这个模块生成一些随机数据。
+说明：程序内置了[mockjs模块](http://mockjs.com/)，可以直接使用这个模块生成一些随机数据。
 
 如下为一份使用了mockjs模块自定义数据的js文件的内容：
 
@@ -110,9 +129,9 @@ const returnRes = (req) => {
       // 属性 id 是一个自增数，起始值为 1，每次增 1
       'id|+1': 1
     }],
-    // 请求方式
+    // 再接口里返回请求方式
     method: req.method,
-    // 传参
+    // 在接口里返回前端传参
     params: (() => {
       if (req.method === 'POST') {
         return req.body
@@ -126,9 +145,10 @@ const returnRes = (req) => {
 module.exports = returnRes
 ```
 
-## 设置服务端口
+### 设置服务端口
 
 修改配置文件中的config.port字段，默认启用端口号为3000。
+
 
 ## 设置静态文件根路径的访问地址
 

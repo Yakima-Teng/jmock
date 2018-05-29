@@ -1,7 +1,7 @@
 {
   "name": "jmock",
   "version": "0.0.2",
-  "description": "服务器端数据模拟，方便前端工程师独立于后端进行开发。该项目的目标是实现一个简单易用的前端数据模拟工具，支持自定义数据模拟、请求代理、跨域访问。目前只支持http/https请求，不支持websocket通讯协议。",
+  "description": "服务器端数据模拟工具，方便前端工程师独立于后端进行开发。该项目的目标是实现一个简单易用的前端数据模拟工具，支持自定义数据模拟、请求代理、跨域访问。目前只支持http/https请求，不支持websocket通讯协议。支持以命令行工具的方式进行使用。",
   "main": "app.js",
   "bin": {
     "jmock": "bin/jmock",
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/Yakima-Teng/jmock.git"
   },
   "author": "Yakima",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Yakima-Teng/jmock/issues"
   },
