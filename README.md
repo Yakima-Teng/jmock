@@ -43,7 +43,7 @@ jmock init
 ```
 
 3、进入jmock目录，安装项目依赖
-```
+```bash
 cd jmock
 npm i
 ```
