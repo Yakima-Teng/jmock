@@ -1,5 +1,5 @@
 const domain = {
-  server1: 'http://yakima.duapp.com/',
+  server1: 'http://www.example.com/',
   server2: 'http:localhost:6060'
 }
 

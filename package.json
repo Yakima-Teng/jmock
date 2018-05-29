@@ -1,7 +1,7 @@
 {
-  "name": "mock-server",
-  "version": "1.0.0",
-  "description": "服务器端数据模拟，方便前端工程师独立于后端进行开发。该项目的目标是实现一个简单易用的前端数据模拟工具，支持自定义数据模拟、请求代理、跨域访问。目前只支持http请求，不支持websocket通讯。",
+  "name": "jmock",
+  "version": "0.0.1",
+  "description": "服务器端数据模拟，方便前端工程师独立于后端进行开发。该项目的目标是实现一个简单易用的前端数据模拟工具，支持自定义数据模拟、请求代理、跨域访问。目前只支持http/https请求，不支持websocket通讯协议。",
   "main": "app.js",
   "scripts": {
     "start": "node --use-strict app.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Yakima-Teng/mock-server.git"
+    "url": "git+https://github.com/Yakima-Teng/jmock.git"
   },
   "author": "Yakima",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Yakima-Teng/mock-server/issues"
+    "url": "https://github.com/Yakima-Teng/jmock/issues"
   },
-  "homepage": "https://github.com/Yakima-Teng/mock-server#readme",
+  "homepage": "https://github.com/Yakima-Teng/jmock#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
