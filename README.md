@@ -25,7 +25,7 @@
 
 ## 截图
 
-![](https://raw.githubusercontent.com/Yakima-Teng/mock-server/master/screenshots/console.png)
+![](https://github.com/Yakima-Teng/jmock/blob/master/screenshots/console.png)
 
 Established by Yakima Teng
 
