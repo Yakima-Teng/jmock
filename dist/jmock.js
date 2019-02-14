@@ -30,6 +30,10 @@
         return __assign.apply(this, arguments);
     };
 
+    var isDefined = function (val) {
+        return typeof val !== 'undefined';
+    };
+
     /**
      * randomly return true or false
      * @param {number} [probability] the probability to return true, must be a value between 0 and 1 (including 0 and 1)
@@ -39,11 +43,21 @@
      * Mock.Random.boolean(0.9) // true
      * ```
      */
-    var returnBoolean = function (probability) {
-        if (typeof probability === 'undefined') {
+    var bool = function (probability) {
+        if (!isDefined(probability)) {
             return Math.random() > 0.5;
         }
         return Math.random() > (1 - probability);
+    };
+    /**
+     * randomly return an integer
+     * @param {number} [min]
+     * @param {number} [max]
+     */
+    var int = function (min, max) {
+        min = isDefined(min) ? parseInt('' + min, 10) : -9007199254740992; // -2^53
+        max = isDefined(max) ? parseInt('' + max, 10) : 9007199254740992; // 2^53
+        return Math.round(Math.random() * (max - min)) + min;
     };
     /**
      * randomly return a natural number (0, and positive integer)
@@ -56,14 +70,51 @@
      * ```
      */
     var natural = function (min, max) {
-        min = typeof min !== 'undefined' ? parseInt('' + min, 10) : 0;
-        max = typeof max !== 'undefined' ? parseInt('' + max, 10) : 9007199254740992; // 2^53
-        return Math.round(Math.random() * (max - min)) + min;
+        min = isDefined(min) ? parseInt('' + min, 10) : 0;
+        return int(min, max);
+    };
+    /**
+     * randomly return a character
+     * @param {string} clue 'lower', 'upper', 'number', 'symbol', 'alpha', or other given string
+     */
+    var char = function (clue) {
+        var lower = 'abcdefghijklmnopqrstuvwxyz';
+        var upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var number = '0123456789';
+        var symbol = '!@#$%^&*()[]-+`~;\'\\":,./<>?|}{';
+        var alpha = lower + upper;
+        var together = [alpha, number, symbol].join('');
+        var pools = { lower: lower, upper: upper, number: number, symbol: symbol, alpha: alpha };
+        var pool = !isDefined(clue) ? together : (pools[clue.toLowerCase()] || clue);
+        return pool.charAt(natural(0, pool.length - 1));
+    };
+    /**
+     * randomly return a float number
+     * @param min
+     * @param max
+     * @param minDecimalLength
+     * @param maxDecimalLength
+     */
+    var float = function (min, max, minDecimalLength, maxDecimalLength) {
+        minDecimalLength = isDefined(minDecimalLength) ? minDecimalLength : 0;
+        maxDecimalLength = isDefined(maxDecimalLength) ? maxDecimalLength : 17;
+        // ensure length of decimal part is between [0, 17]
+        minDecimalLength = Math.max(Math.min(minDecimalLength, 17), 0);
+        maxDecimalLength = Math.max(Math.min(maxDecimalLength, 17), 0);
+        var decimalLength = natural(minDecimalLength, maxDecimalLength);
+        var returnNum = int(min, max) + '.';
+        for (var i = 0; i < decimalLength; i++) {
+            // the last dicimal number should not be zero, for it will be ignore by JS engine
+            returnNum += (i < decimalLength - 1) ? char('number') : char('123456789');
+        }
+        return parseFloat(returnNum);
     };
     var Basic = {
-        boolean: returnBoolean,
-        bool: returnBoolean,
-        natural: natural
+        bool: bool,
+        int: int,
+        natural: natural,
+        char: char,
+        float: float
     };
 
     var Random = __assign({}, Basic);
