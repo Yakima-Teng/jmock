@@ -7,12 +7,23 @@
  * Mock.Random.boolean(0.9) // true
  * ```
  */
-const returnBoolean = (probability?: number): boolean => {
+const bool = (probability?: number): boolean => {
   if (typeof probability === 'undefined') {
     return Math.random() > 0.5
   }
 
   return Math.random() > (1 - probability)
+}
+
+/**
+ * randomly return a integer
+ * @param {number} [min]
+ * @param {number} [max]
+ */
+const int = (min?: number, max?:number): number => {
+  min = typeof min !== 'undefined' ? parseInt('' + min, 10) : -9007199254740992 // -2^53
+  max = typeof max !== 'undefined' ? parseInt('' + max, 10) : 9007199254740992 // 2^53
+  return  Math.round(Math.random() * (max - min)) + min
 }
 
 /**
@@ -27,13 +38,11 @@ const returnBoolean = (probability?: number): boolean => {
  */
 const natural = (min?: number, max?: number): number => {
   min = typeof min !== 'undefined' ? parseInt('' + min, 10) : 0
-  max = typeof max !== 'undefined' ? parseInt('' + max, 10) : 9007199254740992 // 2^53
-  return Math.round(Math.random() * (max - min)) + min
+  return int(min, max)
 }
 
 export default {
-  boolean: returnBoolean,
-  bool: returnBoolean,
-
+  bool,
+  int,
   natural,
 }
