@@ -51,5 +51,16 @@
     "user-home": "^2.0.0",
     "util": "^0.10.3",
     "zlib": "^1.0.5"
+  },
+  "devDependencies": {
+    "eslint-friendly-formatter": "^4.0.1",
+    "gulp": "^4.0.0",
+    "gulp-connect": "^5.7.0",
+    "gulp-eslint": "^5.0.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-typescript": "^1.0.0",
+    "rollup-plugin-uglify": "^6.0.2",
+    "tslib": "^1.9.3",
+    "typescript": "^3.3.3"
   }
 }

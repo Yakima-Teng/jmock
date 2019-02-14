@@ -171,6 +171,6 @@ module.exports = returnRes
 
 - 访问"/test"和访问"/test/index.html"访问的是同一个文件，因为程序设定的默认首页为index.html。
 
-## License
+## 许可
 
-The MIT License (MIT)
+jMock is available under the terms of the MIT License (MIT)
