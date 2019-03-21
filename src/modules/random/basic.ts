@@ -32,7 +32,7 @@ const int = (min?: number, max?: number): number => {
  * randomly return a natural number (0, and positive integer)
  * @param {number} [min]
  * @param {number} [max]
- * 
+ *
  * @example
  * ```javascript
  * Mock.Random.natural(10, 20) // 10
@@ -48,30 +48,30 @@ const natural = (min?: number, max?: number): number => {
  * @param {string} clue 'lower', 'upper', 'number', 'symbol', 'alpha', or other given string
  */
 const char = (clue: string): string => {
-  const lower = 'abcdefghijklmnopqrstuvwxyz',
-  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-  const number = '0123456789',
+  const lower = 'abcdefghijklmnopqrstuvwxyz'
+  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const number = '0123456789'
   const symbol = '!@#$%^&*()[]-+`~;\'\\":,./<>?|}{'
   const alpha = lower + upper
 
   const together = [alpha, number, symbol].join('')
   const pools = { lower, upper, number, symbol, alpha }
-  
+
   const pool = !isDefined(clue) ? together : (pools[clue.toLowerCase()] || clue)
   return pool.charAt(natural(0, pool.length - 1))
 }
 
 /**
  * randomly return a float number
- * @param min 
- * @param max 
- * @param minDecimalLength 
- * @param maxDecimalLength 
+ * @param min
+ * @param max
+ * @param minDecimalLength
+ * @param maxDecimalLength
  */
 const float = (min?: number, max?: number, minDecimalLength?: number, maxDecimalLength?: number): number => {
   minDecimalLength = isDefined(minDecimalLength) ? minDecimalLength : 0
   maxDecimalLength = isDefined(maxDecimalLength) ? maxDecimalLength : 17
-  
+
   // ensure length of decimal part is between [0, 17]
   minDecimalLength = Math.max(Math.min(minDecimalLength, 17), 0)
   maxDecimalLength = Math.max(Math.min(maxDecimalLength, 17), 0)
