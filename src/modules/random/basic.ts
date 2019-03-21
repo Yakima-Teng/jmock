@@ -89,6 +89,14 @@ const float = (min?: number, max?: number, minDecimalLength?: number, maxDecimal
 
 /**
  * randomly return a string
+ *
+ * - Mock.Random.str(pool, min, max)
+ * - Mock.Random.str(pool, length)
+ * - Mock.Random.str(min, max), equals to Mock.Random.str(undefined, min, max)
+ * - Mock.Random.str(pool), equals to Mock.Random.str(pool, 3, 7)
+ * - Mock.Random.str(length), equals to Mock.Random.str(undefined, length)
+ * - Mock.Random.str(), equals to Mock.Random.str(3, 7)
+ *
  * @param {string | number} [pool] given string, or length of string
  * @param {number} [min] length of string, or minimum length of string
  * @param {number} [max] maximum length of string
