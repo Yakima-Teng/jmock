@@ -149,6 +149,48 @@ const str = (pool?: string | number, min?: number, max?: number): string => {
   return text
 }
 
+/**
+ * return an array of integers
+ *
+ * Mock.Random.range() => Mock.Random.range(0, 0, 1) => []
+ * Mock.Random.range(start) => Mock.Random.range(0, start, 1)
+ * Mock.Random.range(start, stop) => Mock.Random.range(start, stop, 1)
+ * Mock.Random.range(start, stop, step)
+ * @param {number} [start] start integer, default is 0
+ * @param {number} [stop] stop integer, itself is excluded from resulting array
+ * @param {number} [step] step length, default is 1
+ *
+ * @example
+ * ```javascript
+ * Mock.Random.range() // []
+ * Mock.Random.range(3) // [0, 1, 2, 3]
+ * Mock.Random.range(2, 4) // [2, 3, 4]
+ * Mock.Random.range(2, 8, 3) // [2, 5, 7]
+ * Mock.Random.range(2, 7, 3) // [2, 5] (note that 7 is not included)
+ * ```
+ */
+const range = (start?: number, stop?: number, step?: number) => {
+  if (!isDefined(start)) {
+    stop = 0
+    start = 0
+    step = 1
+  } else if (!isDefined(stop)) {
+    stop = start || 0
+    start = 0
+    step = 1
+  } else if (!isDefined(step)) {
+    step = 1
+  }
+  const len = Math.max(Math.ceil((stop - start) / step), 0)
+  let idx = 0
+  const arrRange = new Array(len)
+  while (idx < len) {
+    arrRange[idx++] = start
+    start += step
+  }
+  return range
+}
+
 export default {
   bool,
   boolean: bool,
@@ -160,4 +202,5 @@ export default {
   float,
   str,
   string: str,
+  range,
 }
