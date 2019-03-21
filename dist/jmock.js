@@ -111,9 +111,12 @@
     };
     var Basic = {
         bool: bool,
+        boolean: bool,
         int: int,
+        integer: int,
         natural: natural,
         char: char,
+        character: char,
         float: float
     };
 

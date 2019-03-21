@@ -12,6 +12,7 @@
   "scripts": {
     "start": "node --use-strict app.js",
     "dev": "nodemon --use-strict app.js",
+    "build:lib": "nodemon --use-strict build/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
