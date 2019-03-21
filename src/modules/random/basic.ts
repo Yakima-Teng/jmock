@@ -89,8 +89,11 @@ const float = (min?: number, max?: number, minDecimalLength?: number, maxDecimal
 
 export default {
   bool,
+  boolean: bool,
   int,
+  integer: int,
   natural,
   char,
+  character: char,
   float,
 }
