@@ -82,7 +82,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use(cookieParser())
-app.use(config.root, express.static(path.join(__dirname, 'public'), {
+app.use(config.public, express.static(path.join(__dirname, 'public'), {
   index: 'index.html',
   maxAge: 60 * 60 * 1000
 }))

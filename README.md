@@ -165,7 +165,7 @@ module.exports = returnRes
 
 ## 设置静态文件根路径的访问地址
 
-将您的前端文件或其他静态文件放置于public目录下，然后修改配置文件中的config.root，config.root的值将与public目录直接映射。config.root的默认值为"/test"，即"/test/index.html"将会访问public目录下的index.html文件。
+将您的前端文件或其他静态文件放置于public目录下，然后修改配置文件中的config.public，config.public的值将与public目录直接映射。config.public的默认值为"/test"，即"/test/index.html"将会访问public目录下的index.html文件。
 
 说明：
 

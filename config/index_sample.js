@@ -3,10 +3,10 @@ const domain = {
 }
 
 const config = {
-  showReadMe: true,
+  showReadMe: true, // 是否显示说明文档
   port: '3000',
-  // 将public目录映射成为url中root对应的目录
-  root: '/test',
+  // 将public目录映射成为url中的对应路径
+  public: '/test',
   // 代理请求，将请求转发至其他服务器，然后返回相应的内容
   proxyTable: {
     '/apis/proxy': {
