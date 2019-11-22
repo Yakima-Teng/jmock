@@ -82,10 +82,6 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use(cookieParser())
-app.use(config.public, express.static(path.join(__dirname, 'public'), {
-  index: 'index.html',
-  maxAge: 60 * 60 * 1000
-}))
 
 app.get('/readme', (req, res, next) => {
   fs.readFile(path.join(__dirname, 'README.md'), (err, data) => {
@@ -96,6 +92,22 @@ app.get('/readme', (req, res, next) => {
     const readme = md.render(data.toString())
     res.send(readme)
   })
+})
+
+// 301 moved permanently
+Object.keys(config.redirect.movedPermanently).forEach(key => {
+    app.all(key, (req, res, next) => {
+        const targetLocation = config.redirect.movedPermanently[key]
+        res.redirect(301, targetLocation)
+    })
+})
+
+// 302 moved temporarily
+Object.keys(config.redirect.movedTemporarily).forEach(key => {
+    app.all(key, (req, res, next) => {
+        const targetLocation = config.redirect.movedTemporarily[key]
+        res.redirect(302, targetLocation)
+    })
 })
 
 // response row json file content
@@ -156,6 +168,11 @@ config.customTable.forEach(context => {
     res.json(content)
   })
 })
+
+app.use(config.public, express.static(path.join(__dirname, 'public'), {
+    index: 'index.html',
+    maxAge: 60 * 60 * 1000
+}))
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
