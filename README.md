@@ -25,7 +25,7 @@
 
 ## 截图
 
-![](https://github.com/Yakima-Teng/jmock/raw/master/screenshots/console.png)
+![](./screenshots/console.png)
 
 Established by Yakima Teng
 
