@@ -10,11 +10,11 @@ import { isDefined } from '../../utils'
  * ```
  */
 const bool = (probability?: number): boolean => {
-  if (!isDefined(probability)) {
-    return Math.random() > 0.5
-  }
+    if (!isDefined(probability)) {
+        return Math.random() > 0.5
+    }
 
-  return Math.random() > (1 - probability)
+    return Math.random() > (1 - probability)
 }
 
 /**
@@ -23,9 +23,9 @@ const bool = (probability?: number): boolean => {
  * @param {number} [max]
  */
 const int = (min?: number, max?: number): number => {
-  min = isDefined(min) ? parseInt('' + min, 10) : -9007199254740992 // -2^53
-  max = isDefined(max) ? parseInt('' + max, 10) : 9007199254740992 // 2^53
-  return  Math.round(Math.random() * (max - min)) + min
+    min = isDefined(min) ? parseInt('' + min, 10) : -9007199254740992 // -2^53
+    max = isDefined(max) ? parseInt('' + max, 10) : 9007199254740992 // 2^53
+    return  Math.round(Math.random() * (max - min)) + min
 }
 
 /**
@@ -39,8 +39,8 @@ const int = (min?: number, max?: number): number => {
  * ```
  */
 const natural = (min?: number, max?: number): number => {
-  min = isDefined(min) ? parseInt('' + min, 10) : 0
-  return int(min, max)
+    min = isDefined(min) ? parseInt('' + min, 10) : 0
+    return int(min, max)
 }
 
 /**
@@ -48,17 +48,17 @@ const natural = (min?: number, max?: number): number => {
  * @param {string} clue 'lower', 'upper', 'number', 'symbol', 'alpha', or other given string
  */
 const char = (clue?: string): string => {
-  const lower = 'abcdefghijklmnopqrstuvwxyz'
-  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  const number = '0123456789'
-  const symbol = '!@#$%^&*()[]-+`~;\'\\":,./<>?|}{'
-  const alpha = lower + upper
+    const lower = 'abcdefghijklmnopqrstuvwxyz'
+    const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    const number = '0123456789'
+    const symbol = '!@#$%^&*()[]-+`~;\'\\":,./<>?|}{'
+    const alpha = lower + upper
 
-  const together = [alpha, number, symbol].join('')
-  const pools = { lower, upper, number, symbol, alpha }
+    const together = [alpha, number, symbol].join('')
+    const pools = { lower, upper, number, symbol, alpha }
 
-  const pool = !isDefined(clue) ? together : (pools[clue.toLowerCase()] || clue)
-  return pool.charAt(natural(0, pool.length - 1))
+    const pool = !isDefined(clue) ? together : (pools[clue.toLowerCase()] || clue)
+    return pool.charAt(natural(0, pool.length - 1))
 }
 
 /**
@@ -69,22 +69,22 @@ const char = (clue?: string): string => {
  * @param maxDecimalLength
  */
 const float = (min?: number, max?: number, minDecimalLength?: number, maxDecimalLength?: number): number => {
-  minDecimalLength = isDefined(minDecimalLength) ? minDecimalLength : 0
-  maxDecimalLength = isDefined(maxDecimalLength) ? maxDecimalLength : 17
+    minDecimalLength = isDefined(minDecimalLength) ? minDecimalLength : 0
+    maxDecimalLength = isDefined(maxDecimalLength) ? maxDecimalLength : 17
 
-  // ensure length of decimal part is between [0, 17]
-  minDecimalLength = Math.max(Math.min(minDecimalLength, 17), 0)
-  maxDecimalLength = Math.max(Math.min(maxDecimalLength, 17), 0)
-  const decimalLength = natural(minDecimalLength, maxDecimalLength)
+    // ensure length of decimal part is between [0, 17]
+    minDecimalLength = Math.max(Math.min(minDecimalLength, 17), 0)
+    maxDecimalLength = Math.max(Math.min(maxDecimalLength, 17), 0)
+    const decimalLength = natural(minDecimalLength, maxDecimalLength)
 
-  let returnNum = int(min, max) + '.'
+    let returnNum = int(min, max) + '.'
 
-  for (let i = 0; i < decimalLength; i++) {
-    // the last dicimal number should not be zero, for it will be ignore by JS engine
-    returnNum += (i < decimalLength - 1) ? char('number') : char('123456789')
-  }
+    for (let i = 0; i < decimalLength; i++) {
+        // the last dicimal number should not be zero, for it will be ignore by JS engine
+        returnNum += (i < decimalLength - 1) ? char('number') : char('123456789')
+    }
 
-  return parseFloat(returnNum)
+    return parseFloat(returnNum)
 }
 
 /**
@@ -117,36 +117,36 @@ const float = (min?: number, max?: number, minDecimalLength?: number, maxDecimal
  * ```
  */
 const str = (pool?: string | number, min?: number, max?: number): string => {
-  let len
-  if (isDefined(max)) {
-    len = natural(min, max)
-  } else if (isDefined(min)) {
+    let len
+    if (isDefined(max)) {
+        len = natural(min, max)
+    } else if (isDefined(min)) {
+        if (typeof pool === 'string') {
+            // (pool, length) return specific length of string from given pool
+            len = min
+        } else if (typeof pool === 'number') {
+            // (min, max) return random number (between min and max) of string
+            len = natural(pool, min)
+            pool = void 0
+        }
+    } else if (isDefined(pool)) {
+        if (typeof pool === 'number') {
+            // (length)
+            len = pool
+            pool = void 0
+        } else if (typeof pool === 'string') {
+            len = natural(3, 7)
+        }
+    } else {
+        len = natural(3, 7)
+    }
+    let text = ''
     if (typeof pool === 'string') {
-      // (pool, length) return specific length of string from given pool
-      len = min
-    } else if (typeof pool === 'number') {
-      // (min, max) return random number (between min and max) of string
-      len = natural(pool, min)
-      pool = void 0
+        for (let i = 0; i < len; i++) {
+            text += char(pool)
+        }
     }
-  } else if (isDefined(pool)) {
-    if (typeof pool === 'number') {
-      // (length)
-      len = pool
-      pool = void 0
-    } else if (typeof pool === 'string') {
-      len = natural(3, 7)
-    }
-  } else {
-    len = natural(3, 7)
-  }
-  let text = ''
-  if (typeof pool === 'string') {
-    for (let i = 0; i < len; i++) {
-      text += char(pool)
-    }
-  }
-  return text
+    return text
 }
 
 /**
@@ -170,37 +170,37 @@ const str = (pool?: string | number, min?: number, max?: number): string => {
  * ```
  */
 const range = (start?: number, stop?: number, step?: number) => {
-  if (!isDefined(start)) {
-    stop = 0
-    start = 0
-    step = 1
-  } else if (!isDefined(stop)) {
-    stop = start || 0
-    start = 0
-    step = 1
-  } else if (!isDefined(step)) {
-    step = 1
-  }
-  const len = Math.max(Math.ceil((stop - start) / step), 0)
-  let idx = 0
-  const arrRange = new Array(len)
-  while (idx < len) {
-    arrRange[idx++] = start
-    start += step
-  }
-  return range
+    if (!isDefined(start)) {
+        stop = 0
+        start = 0
+        step = 1
+    } else if (!isDefined(stop)) {
+        stop = start || 0
+        start = 0
+        step = 1
+    } else if (!isDefined(step)) {
+        step = 1
+    }
+    const len = Math.max(Math.ceil((stop - start) / step), 0)
+    let idx = 0
+    const arrRange = new Array(len)
+    while (idx < len) {
+        arrRange[idx++] = start
+        start += step
+    }
+    return range
 }
 
 export default {
-  bool,
-  boolean: bool,
-  int,
-  integer: int,
-  natural,
-  char,
-  character: char,
-  float,
-  str,
-  string: str,
-  range,
+    bool,
+    boolean: bool,
+    int,
+    integer: int,
+    natural,
+    char,
+    character: char,
+    float,
+    str,
+    string: str,
+    range,
 }
