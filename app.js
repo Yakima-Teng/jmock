@@ -10,6 +10,7 @@ const md = new require('markdown-it')()
 const opn = require('opn')
 const body = require('stream-body')
 const zlib = require('zlib')
+const cors = require('cors')
 const config = require('./config')
 
 let app = express()
@@ -22,6 +23,7 @@ manufactureInfrastructure([
 ])
 
 // allow cross-origin ajax request
+app.use(cors())
 app.all('*', (req, res, next) => {
     console.log(`[${req.method}] ${req.url} ${new Date()}`)
     res.header('Access-Control-Allow-Origin', '*')
