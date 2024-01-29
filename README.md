@@ -90,7 +90,7 @@ jmock [path] [options]
 To implement a catch-all redirect, use the index page itself as the proxy with:
 
 ```
-http-server --proxy http://localhost:8080?
+jmock --proxy http://localhost:8080?
 ```
 
 Note the `?` at the end of the proxy URL. Thanks to [@houston3](https://github.com/houston3) for this clever hack!
@@ -110,7 +110,7 @@ This generates a cert-key pair and it will be valid for 3650 days (about 10 year
 Then you need to run the server with `-S` for enabling SSL and `-C` for your certificate file.
 
 ``` sh
-http-server -S -C cert.pem
+jmock -S -C cert.pem
 ```
 
 If you wish to use a passphrase with your private key you can include one in the openssl command via the -passout parameter (using password of foobar)
@@ -119,15 +119,15 @@ If you wish to use a passphrase with your private key you can include one in the
 e.g.
 `openssl req -newkey rsa:2048 -passout pass:foobar -keyout key.pem -x509 -days 365 -out cert.pem`
 
-For security reasons, the passphrase will only be read from the `NODE_HTTP_SERVER_SSL_PASSPHRASE` environment variable.
+For security reasons, the passphrase will only be read from the `NODE_JMOCK_SSL_PASSPHRASE` environment variable.
 
 
 This is what should be output if successful:
 
 ``` sh
-Starting up http-server, serving ./ through https
+Starting up jmock, serving ./ through https
 
-http-server settings:
+jmock settings:
 CORS: disabled
 Cache: 3600 seconds
 Connection Timeout: 120 seconds
