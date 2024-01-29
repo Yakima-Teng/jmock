@@ -24,7 +24,8 @@
     "ready": "npm install",
     "start": "node ./bin/jmock",
     "test": "tap --reporter=spec test/*.test.js",
-    "test-watch": "tap --reporter=spec --watch test/*.test.js"
+    "test-watch": "tap --reporter=spec --watch test/*.test.js",
+    "release": "bash bash/release.sh"
   },
   "files": [
     "lib",

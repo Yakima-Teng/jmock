@@ -14,8 +14,8 @@ test('malformed uri', (t) => {
     request.get(`http://localhost:${server.address().port}/%`, (err, res) => {
       t.ifError(err);
       t.equal(res.statusCode, 400);
-      server.close(() => { t.end(); });
+      server.close();
+      t.end()
     });
   });
 });
-

@@ -75,7 +75,7 @@ test('304_not_modified_weak', (t) => {
 
     server.listen(port, () => {
       const uri = `http://localhost:${port}${path.join('/', baseDir, file)}`;
-      const now = (new Date()).toString();
+      const now = (new Date()).toUTCString();
 
       request.get({
         uri,
@@ -94,7 +94,7 @@ test('304_not_modified_weak', (t) => {
         }, (err2, res2) => {
           if (err2) t.fail(err2);
 
-          t.equal(res2.statusCode, 304, 'second request should be a 304');
+          t.equal(res2.statusCode, 304, `second request should be a 304, but get ${res2.statusCode}`);
           t.equal(res2.headers.etag.indexOf('W/'), 0, 'should return a weak etag');
           server.close();
           t.end();
@@ -122,7 +122,7 @@ test('304_not_modified_strong_compare', (t) => {
 
     server.listen(port, () => {
       const uri = `http://localhost:${port}${path.join('/', baseDir, file)}`;
-      const now = (new Date()).toString();
+      const now = (new Date()).toUTCString();
       let etag = null;
 
       request.get({
@@ -190,7 +190,7 @@ test('304_not_modified_weak_compare', (t) => {
 
     server.listen(port, () => {
       const uri = `http://localhost:${port}${path.join('/', baseDir, file)}`;
-      const now = (new Date()).toString();
+      const now = (new Date()).toUTCString();
       let etag = null;
 
       request.get({
