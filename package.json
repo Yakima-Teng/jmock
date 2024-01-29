@@ -1,6 +1,6 @@
 {
   "name": "jmock",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A simple command-line http server with mock and proxy abilities out of box",
   "main": "./lib/jmock",
   "repository": {
