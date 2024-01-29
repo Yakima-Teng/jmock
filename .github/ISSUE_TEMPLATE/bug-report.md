@@ -9,7 +9,7 @@ about: Create a report to help us improve
 
 1. OS Type
 1. Node version: `$ node --version`
-1. http-server version: `$ http-server --version`
+1. jmock version: `$ jmock --version`
 
 #### Steps to reproduce
 

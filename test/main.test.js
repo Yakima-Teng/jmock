@@ -2,7 +2,7 @@ const test = require('tap').test;
 const path = require('path');
 const fs = require('fs');
 const request = require('request');
-const httpServer = require('../lib/http-server');
+const jmock = require('../lib/jmock');
 const promisify = require('util').promisify;
 
 const requestAsync = promisify(request);
@@ -16,10 +16,10 @@ const root = path.join(__dirname, 'fixtures', 'root');
 // Tests are grouped into those which can run together. The groups are given
 // their own port to run on and live inside a Promise. Tests are done when all
 // Promise test groups complete.
-test('http-server main', (t) => {
+test('jmock main', (t) => {
   Promise.all([
     new Promise((resolve) => {
-      const server = httpServer.createServer({
+      const server = jmock.createServer({
         root,
         robots: true,
         headers: {
@@ -129,7 +129,7 @@ test('http-server main', (t) => {
           ]);
 
           // Another server proxies 8081 to 8080
-          const proxyServer = httpServer.createServer({
+          const proxyServer = jmock.createServer({
             proxy: "http://localhost:8080",
             root: path.join(__dirname, 'fixtures')
           });
@@ -174,7 +174,7 @@ test('http-server main', (t) => {
       });
     }),
     new Promise((resolve) => {
-      const server = httpServer.createServer({
+      const server = jmock.createServer({
         root,
         username: 'correct_username',
         password: 'correct_password'
@@ -244,7 +244,7 @@ test('http-server main', (t) => {
     }),
 
     new Promise((resolve) => {
-      const server = httpServer.createServer({
+      const server = jmock.createServer({
         root,
         username: 'correct_username',
         password: 123456

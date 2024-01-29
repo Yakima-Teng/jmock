@@ -1,15 +1,15 @@
-.TH http-server 1 "April 2020" GNU "http-server man page"
+.TH jmock 1 "January 2024" GNU "jmock man page"
 
 .SH NAME
-http-server \- a simple zero-configuration command-line http server
+jmock \- a simple command-line http server with mock and proxy abilities out of box
 
 .SH SYNOPSIS
-.B http-server
+.B jmock
 [\fIPATH\fR]
 [\fIOPTIONS\fR]
 
 .SH DESCRIPTION
-\fBhttp-server\fR is a simple, zero-configuration command-line http server. It is powerful enough for production usage, but it's simple and hackable enough to be used for testing, local development, and learning.
+\fBjmock\fR is a simple command-line http server with mock and proxy abilities out of box. It is powerful enough for production usage, but it's simple and hackable enough to be used for testing, local development, and learning.
 
 .SH OPTIONS
 
@@ -92,13 +92,13 @@ Pass proxy options using nested dotted objects.
 .TP
 .BI \-\-username " " \fIUSERNAME\fR
 Username for basic authentication.
-Can also be specified with the environment variable NODE_HTTP_SERVER_USERNAME.
+Can also be specified with the environment variable NODE_JMOCK_USERNAME.
 Defaults to none.
 
 .TP
 .BI \-\-password " " \fIPASSWORD\fR
 Password for basic authentication.
-Can also be specified with the environment variable NODE_HTTP_SERVER_PASSWORD.
+Can also be specified with the environment variable NODE_JMOCK_PASSWORD.
 Defaults to none.
 
 .TP
@@ -114,7 +114,7 @@ If not specified, uses cert.pem.
 .BI \-K ", " \-\-key " " [\fIFILE\fR]
 Path to SSL key file.
 If not specified, uses key.pem.
-Passphrase will be read from NODE_HTTP_SERVER_SSL_PASSPHRASE (if set)
+Passphrase will be read from NODE_JMOCK_SSL_PASSPHRASE (if set)
 
 .TP
 .BI \-r ", " \-\-robots " " [\fIUSER\-AGENT\fR]
@@ -162,4 +162,4 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .SH VERSION
-Version 0.12.2
+Version 0.0.0

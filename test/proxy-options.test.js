@@ -2,7 +2,7 @@ const test = require('tap').test
 const path = require('path')
 const fs = require('fs')
 const request = require('request')
-const httpServer = require('../lib/http-server')
+const jmock = require('../lib/jmock')
 const promisify = require('util').promisify
 
 const requestAsync = promisify(request)
@@ -22,7 +22,7 @@ const httpsOpts = {
 // Promise test groups complete.
 test('proxy options', (t) => {
   new Promise((resolve) => {
-    const server = httpServer.createServer({
+    const server = jmock.createServer({
       root,
       robots: true,
       headers: {
@@ -40,7 +40,7 @@ test('proxy options', (t) => {
       try {
 
         // Another server proxies 8081 to 8080
-        const proxyServer = httpServer.createServer({
+        const proxyServer = jmock.createServer({
           proxy: 'http://localhost:8080',
           root: path.join(__dirname, 'fixtures'),
           tls: true,

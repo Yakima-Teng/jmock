@@ -1,11 +1,11 @@
 {
-  "name": "http-server",
-  "version": "14.1.1",
-  "description": "A simple zero-configuration command-line http server",
-  "main": "./lib/http-server",
+  "name": "jmock",
+  "version": "0.0.0",
+  "description": "A simple command-line http server with mock and proxy abilities out of box",
+  "main": "./lib/jmock",
   "repository": {
     "type": "git",
-    "url": "git://github.com/http-party/http-server.git"
+    "url": "git://github.com/Yakima-Teng/jmock.git"
   },
   "keywords": [
     "cli",
@@ -15,10 +15,14 @@
     "https",
     "http-server",
     "https-server",
-    "server"
+    "server",
+    "mock",
+    "proxy",
+    "jmock"
   ],
   "scripts": {
-    "start": "node ./bin/http-server",
+    "ready": "npm install",
+    "start": "node ./bin/jmock",
     "test": "tap --reporter=spec test/*.test.js",
     "test-watch": "tap --reporter=spec --watch test/*.test.js"
   },
@@ -27,61 +31,14 @@
     "bin",
     "doc"
   ],
-  "man": "./doc/http-server.1",
+  "man": "./doc/jmock.1",
   "engines": {
     "node": ">=12.16"
   },
   "contributors": [
     {
-      "name": "Charlie Robbins",
-      "email": "charlie.robbins@gmail.com"
-    },
-    {
-      "name": "Marak Squires",
-      "email": "marak.squires@gmail.com"
-    },
-    {
-      "name": "Charlie McConnell",
-      "email": "charlie@charlieistheman.com"
-    },
-    {
-      "name": "Joshua Holbrook",
-      "email": "josh.holbrook@gmail.com"
-    },
-    {
-      "name": "Maciej Małecki",
-      "email": "maciej.malecki@notimplemented.org"
-    },
-    {
-      "name": "Matthew Bergman",
-      "email": "mzbphoto@gmail.com"
-    },
-    {
-      "name": "brad dunbar",
-      "email": "dunbarb2@gmail.com"
-    },
-    {
-      "name": "Dominic Tarr"
-    },
-    {
-      "name": "Travis Person",
-      "email": "travis.person@gmail.com"
-    },
-    {
-      "name": "Jinkwon Lee",
-      "email": "master@bdyne.net"
-    },
-    {
-      "name": "BigBlueHat",
-      "email": "byoung@bigbluehat.com"
-    },
-    {
-      "name": "Daniel Dalton",
-      "email": "daltond2@hawkmail.newpaltz.edu"
-    },
-    {
-      "name": "Jade Michael Thornton",
-      "email": "jademichael@jmthornton.net"
+      "name": "Yakima Teng",
+      "email": "yakima.public@gmail.com"
     }
   ],
   "dependencies": {
@@ -108,11 +65,11 @@
     "tap": "^14.11.0"
   },
   "bugs": {
-    "url": "https://github.com/http-party/http-server/issues"
+    "url": "https://github.com/Yakima-Teng/jmock/issues"
   },
   "license": "MIT",
   "preferGlobal": true,
   "bin": {
-    "http-server": "./bin/http-server"
+    "jmock": "./bin/jmock"
   }
 }

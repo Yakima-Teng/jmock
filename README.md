@@ -1,12 +1,12 @@
-[![GitHub Workflow Status (master)](https://img.shields.io/github/workflow/status/http-party/http-server/Node.js%20CI/master?style=flat-square)](https://github.com/http-party/http-server/actions)
-[![npm](https://img.shields.io/npm/v/http-server.svg?style=flat-square)](https://www.npmjs.com/package/http-server) [![homebrew](https://img.shields.io/homebrew/v/http-server?style=flat-square)](https://formulae.brew.sh/formula/http-server) [![npm downloads](https://img.shields.io/npm/dm/http-server?color=blue&label=npm%20downloads&style=flat-square)](https://www.npmjs.com/package/http-server)
-[![license](https://img.shields.io/github/license/http-party/http-server.svg?style=flat-square)](https://github.com/http-party/http-server)
+[![GitHub Workflow Status (master)](https://img.shields.io/github/workflow/status/Yakima-Teng/jmock/Node.js%20CI/master?style=flat-square)](https://github.com/Yakima-Teng/jmock/actions)
+[![npm](https://img.shields.io/npm/v/jmock.svg?style=flat-square)](https://www.npmjs.com/package/jmock) [![homebrew](https://img.shields.io/homebrew/v/jmock?style=flat-square)](https://formulae.brew.sh/formula/jmock) [![npm downloads](https://img.shields.io/npm/dm/jmock?color=blue&label=npm%20downloads&style=flat-square)](https://www.npmjs.com/package/jmock)
+[![license](https://img.shields.io/github/license/Yakima-Teng/jmock.svg?style=flat-square)](https://github.com/Yakima-Teng/jmock)
 
-# http-server: a simple static HTTP server
+# jmock: a simple static HTTP server
 
-`http-server` is a simple, zero-configuration command-line static HTTP server.  It is powerful enough for production usage, but it's simple and hackable enough to be used for testing, local development and learning.
+jmock is a simple command-line static HTTP server with mock and proxy abilities out of box, which is built on top of [`http-server`](https://github.com/http-party/http-server). It is powerful enough for production usage, but it's simple and hackable enough to be used for testing, local development and learning.
 
-![Example of running http-server](https://github.com/http-party/http-server/raw/master/screenshots/public.png)
+![Example of running jmock](https://github.com/Yakima-Teng/jmock/raw/master/screenshots/public.png)
 
 ## Installation:
 
@@ -14,25 +14,35 @@
 
 Using `npx` you can run the script without installing it first:
 
-    npx http-server [path] [options]
+```bash
+npx jmock [path] [options]
+```
 
 #### Globally via `npm`
 
-    npm install --global http-server
+```bash
+npm install --global jmock
+```
 
-This will install `http-server` globally so that it may be run from the command line anywhere.
+This will install `jmock` globally so that it may be run from the command line anywhere.
 
 #### Globally via Homebrew
 
-    brew install http-server
+```bash
+brew install jmock
+```
      
 #### As a dependency in your `npm` package:
 
-    npm install http-server
+```bash
+npm install jmock
+```
 
 ## Usage:
 
-     http-server [path] [options]
+```bash
+jmock [path] [options]
+```
 
 `[path]` defaults to `./public` if the folder exists, and `./` otherwise.
 

@@ -12,14 +12,14 @@ const node = process.execPath;
 const defaultPort = 8080;
 
 function startServer(args) {
-  return spawn(node, [require.resolve('../bin/http-server')].concat(args));
+  return spawn(node, [require.resolve('../bin/jmock')].concat(args));
 }
 
 function checkServerIsRunning(url, msg, t, _cb) {
   if (!msg.toString().match(/Starting up/)) {
     return;
   }
-  t.pass('http-server started');
+  t.pass('jmock started');
   const cb = _cb || (() => {});
 
   request(url, (err, res) => {

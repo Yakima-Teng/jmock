@@ -16,7 +16,7 @@ function checkServerIsRunning(url, msg, ps, t) {
  if (!msg.toString().match(/Starting up/)) {
     return;
   }
-  t.pass('http-server was started');
+  t.pass('jmock was started');
   request(url, (err, res) => {
     if (!err && res.statusCode !== 500) {
       t.pass('a successful request from the server was made');
@@ -28,7 +28,7 @@ function checkServerIsRunning(url, msg, ps, t) {
 }
 
 function startServer(url, port, t) {
-  const ecstatic = spawn(process.execPath, [require.resolve('../bin/http-server')], {
+  const ecstatic = spawn(process.execPath, [require.resolve('../bin/jmock')], {
     env: {
       PORT: String(port),
     },

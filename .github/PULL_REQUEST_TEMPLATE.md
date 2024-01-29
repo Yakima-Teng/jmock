@@ -14,7 +14,7 @@
 - [ ] Documented any new features, CLI switches, etc. (if applicable)
     - [ ] Server `--help` output
     - [ ] README.md
-    - [ ] doc/http-server.1 (use the same format as other entries)
+    - [ ] doc/jmock.1 (use the same format as other entries)
 - [ ] The pull request is being made against the `master` branch
 
 ##### Maintainer checklist

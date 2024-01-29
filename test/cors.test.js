@@ -11,7 +11,7 @@ const root = path.join(__dirname, 'public');
 test('cors defaults to false', (t) => {
   t.plan(4);
 
-  const httpServer = http.createServer(
+  const jmock = http.createServer(
     server({
       root,
       autoIndex: true,
@@ -19,8 +19,8 @@ test('cors defaults to false', (t) => {
     })
   );
 
-  httpServer.listen(() => {
-    const port = httpServer.address().port;
+  jmock.listen(() => {
+    const port = jmock.address().port;
     const uri = `http://localhost:${port}/subdir/index.html`;
 
     request.get({ uri }, (err, res) => {
@@ -31,14 +31,14 @@ test('cors defaults to false', (t) => {
     });
   });
   t.once('end', () => {
-    httpServer.close();
+    jmock.close();
   });
 });
 
 test('cors set to false', (t) => {
   t.plan(4);
 
-  const httpServer = http.createServer(
+  const jmock = http.createServer(
     server({
       root,
       cors: false,
@@ -47,8 +47,8 @@ test('cors set to false', (t) => {
     })
   );
 
-  httpServer.listen(() => {
-    const port = httpServer.address().port;
+  jmock.listen(() => {
+    const port = jmock.address().port;
     const uri = `http://localhost:${port}/subdir/index.html`;
 
     request.get({ uri }, (err, res) => {
@@ -59,14 +59,14 @@ test('cors set to false', (t) => {
     });
   });
   t.once('end', () => {
-    httpServer.close();
+    jmock.close();
   });
 });
 
 test('cors set to true', (t) => {
   t.plan(4);
 
-  const httpServer = http.createServer(
+  const jmock = http.createServer(
     server({
       root,
       cors: true,
@@ -75,8 +75,8 @@ test('cors set to true', (t) => {
     })
   );
 
-  httpServer.listen(() => {
-    const port = httpServer.address().port;
+  jmock.listen(() => {
+    const port = jmock.address().port;
     const uri = `http://localhost:${port}/subdir/index.html`;
     request.get({ uri }, (err, res) => {
       t.ifError(err);
@@ -86,14 +86,14 @@ test('cors set to true', (t) => {
     });
   });
   t.once('end', () => {
-    httpServer.close();
+    jmock.close();
   });
 });
 
 test('CORS set to true', (t) => {
   t.plan(4);
 
-  const httpServer = http.createServer(
+  const jmock = http.createServer(
     server({
       root,
       CORS: true,
@@ -102,8 +102,8 @@ test('CORS set to true', (t) => {
     })
   );
 
-  httpServer.listen(() => {
-    const port = httpServer.address().port;
+  jmock.listen(() => {
+    const port = jmock.address().port;
     const uri = `http://localhost:${port}/subdir/index.html`;
     request.get({ uri }, (err, res) => {
       t.ifError(err);
@@ -113,6 +113,6 @@ test('CORS set to true', (t) => {
     });
   });
   t.once('end', () => {
-    httpServer.close();
+    jmock.close();
   });
 });
