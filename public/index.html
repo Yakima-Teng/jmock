@@ -1,16 +1,35 @@
 <html lang="en-US">
-  <head>
+<head>
     <title>node.js http server</title>
-  </head>
-  <body>
+</head>
+<body>
 
-    <h1>Serving up static files like they were turtles strapped to rockets.</h1>
+<h1>Serving up static files like they were turtles strapped to rockets.</h1>
 
-    <img src="./img/turtle.png" alt="" />
+<img src="./img/horse.jpg" alt=""/>
 
-    <script>
-      fetch('/baidu-search?wd=http-proxy-middleware').then(res => res.text()).then(console.log)
-      fetch('/search?q=http-proxy-middleware').then(res => res.text()).then(console.log)
-    </script>
-  </body>
+<script>
+    fetch('/baidu-search?wd=keyword').then(res => res.text()).then((html) => console.log(html.substring(0, 30)))
+    fetch('/search?q=keyword').then(res => res.text()).then((html) => console.log(html.substring(0, 30)))
+    fetch('/api/hello?a=1&b=2').then(res => res.json()).then((res) => console.log(res.data))
+    fetch("/api/world?c=1&d=hello",
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({a: 11, b: 22})
+        })
+        .then((res) => {
+            return res.json()
+        })
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((res) => {
+            console.log(res)
+        })
+</script>
+</body>
 </html>

@@ -1,14 +1,14 @@
-[![GitHub Workflow Status (master)](https://img.shields.io/github/workflow/status/Yakima-Teng/jmock/Node.js%20CI/master?style=flat-square)](https://github.com/Yakima-Teng/jmock/actions)
-[![npm](https://img.shields.io/npm/v/jmock.svg?style=flat-square)](https://www.npmjs.com/package/jmock) [![homebrew](https://img.shields.io/homebrew/v/jmock?style=flat-square)](https://formulae.brew.sh/formula/jmock) [![npm downloads](https://img.shields.io/npm/dm/jmock?color=blue&label=npm%20downloads&style=flat-square)](https://www.npmjs.com/package/jmock)
+[![npm](https://img.shields.io/npm/v/jmock.svg?style=flat-square)](https://www.npmjs.com/package/jmock)
+[![npm downloads](https://img.shields.io/npm/dm/jmock?color=blue&label=npm%20downloads&style=flat-square)](https://www.npmjs.com/package/jmock)
 [![license](https://img.shields.io/github/license/Yakima-Teng/jmock.svg?style=flat-square)](https://github.com/Yakima-Teng/jmock)
 
 # jmock: command-line HTTP mock server
 
-jmock is a simple command-line static HTTP server with mock and proxy abilities out of box, which is built on top of [`http-server`](https://github.com/http-party/http-server). It is powerful enough for production usage, but it's simple and hackable enough to be used for testing, local development and learning.
+jmock is a simple command-line static HTTP server with mock and proxy abilities out of the box. It is aimed at local development, serving static files, mocking data, and proxying HTTP requests.
 
-![Example of running jmock](https://github.com/Yakima-Teng/jmock/raw/master/screenshots/public.png)
+![cute jmock](./screenshots/public.jpg)
 
-## Installation:
+## Installation
 
 #### Running on-demand:
 
@@ -26,19 +26,14 @@ npm install --global jmock
 
 This will install `jmock` globally so that it may be run from the command line anywhere.
 
-#### Globally via Homebrew
 
-```bash
-brew install jmock
-```
-     
 #### As a dependency in your `npm` package:
 
 ```bash
 npm install jmock
 ```
 
-## Usage:
+## Usage
 
 ```bash
 jmock [path] [options]
@@ -46,114 +41,98 @@ jmock [path] [options]
 
 `[path]` defaults to `./public` if the folder exists, and `./` otherwise.
 
-*Now you can visit http://localhost:8080 to view your server*
+Now you can visit http://localhost:8080 to view your server
 
-**Note:** Caching is on by default. Add `-c-1` as an option to disable caching.
+**Use a specified port:**
 
-## Available Options:
-
-| Command         | 	Description         | Defaults  |
-| -------------  |-------------|-------------|
-|`-p` or `--port` |Port to use. Use `-p 0` to look for an open port, starting at 8080. It will also read from `process.env.PORT`. |8080 |
-|`-a`   |Address to use |0.0.0.0|
-|`-d`     |Show directory listings |`true` |
-|`-i`   | Display autoIndex | `true` |
-|`-g` or `--gzip` |When enabled it will serve `./public/some-file.js.gz` in place of `./public/some-file.js` when a gzipped version of the file exists and the request accepts gzip encoding. If brotli is also enabled, it will try to serve brotli first.|`false`|
-|`-b` or `--brotli`|When enabled it will serve `./public/some-file.js.br` in place of `./public/some-file.js` when a brotli compressed version of the file exists and the request accepts `br` encoding. If gzip is also enabled, it will try to serve brotli first. |`false`|
-|`-e` or `--ext`  |Default file extension if none supplied |`html` | 
-|`-s` or `--silent` |Suppress log messages from output  | |
-|`--cors` |Enable CORS via the `Access-Control-Allow-Origin` header  | |
-|`-o [path]` |Open browser window after starting the server. Optionally provide a URL path to open. e.g.: -o /other/dir/ | |
-|`-c` |Set cache time (in seconds) for cache-control max-age header, e.g. `-c10` for 10 seconds. To disable caching, use `-c-1`.|`3600` |
-|`-U` or `--utc` |Use UTC time format in log messages.| |
-|`--log-ip` |Enable logging of the client's IP address |`false` |
-|`-P` or `--proxy` |Proxies all requests which can't be resolved locally to the given url. e.g.: -P http://someurl.com | |
-|`--proxy-options` |Pass proxy [options](https://github.com/http-party/node-http-proxy#options) using nested dotted objects. e.g.: --proxy-options.secure false |
-|`--username` |Username for basic authentication | |
-|`--password` |Password for basic authentication | |
-|`-S`, `--tls` or `--ssl` |Enable secure request serving with TLS/SSL (HTTPS)|`false`|
-|`-C` or `--cert` |Path to ssl cert file |`cert.pem` | 
-|`-K` or `--key` |Path to ssl key file |`key.pem` |
-|`-r` or `--robots` | Automatically provide a /robots.txt (The content of which defaults to `User-agent: *\nDisallow: /`)  | `false` |
-|`--no-dotfiles` |Do not show dotfiles| |
-|`--mimetypes` |Path to a .types file for custom mimetype definition| |
-|`-h` or `--help` |Print this list and exit. |   |
-|`-v` or `--version`|Print the version and exit. | |
-
-## Magic Files
-
-- `index.html` will be served as the default file to any directory requests.
-- `404.html` will be served if a file is not found. This can be used for Single-Page App (SPA) hosting to serve the entry page.
-
-## Catch-all redirect
-
-To implement a catch-all redirect, use the index page itself as the proxy with:
-
-```
-jmock --proxy http://localhost:8080?
+```bash
+jmock -p 8082
 ```
 
-Note the `?` at the end of the proxy URL. Thanks to [@houston3](https://github.com/houston3) for this clever hack!
+**Enable CORS via the Access-Control-Allow-Origin header:**
 
-## TLS/SSL
-
-First, you need to make sure that [openssl](https://github.com/openssl/openssl) is installed correctly, and you have `key.pem` and `cert.pem` files. You can generate them using this command:
-
-``` sh
-openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+```bash
+jmock --cors
 ```
 
-You will be prompted with a few questions after entering the command. Use `127.0.0.1` as value for `Common name` if you want to be able to install the certificate in your OS's root certificate store or browser so that it is trusted.
+**Open path after starting the server:**
 
-This generates a cert-key pair and it will be valid for 3650 days (about 10 years).
-
-Then you need to run the server with `-S` for enabling SSL and `-C` for your certificate file.
-
-``` sh
-jmock -S -C cert.pem
+```bash
+jmock -o /path
 ```
 
-If you wish to use a passphrase with your private key you can include one in the openssl command via the -passout parameter (using password of foobar)
+**Mock data as HTTP response:**
 
+Create a file named `jmock.config.js` (if not existed) at the path where you run the `jmock` command. Then add a field `mockTable` as below and then rerun the `jmock` command:
 
-e.g.
-`openssl req -newkey rsa:2048 -passout pass:foobar -keyout key.pem -x509 -days 365 -out cert.pem`
+Tip: you can make of the arguments: `req`, `query`, `body`, `method`, and `Mock`. `Mock` is [Mock.js](https://www.npmjs.com/package/mockjs).
 
-For security reasons, the passphrase will only be read from the `NODE_JMOCK_SSL_PASSPHRASE` environment variable.
-
-
-This is what should be output if successful:
-
-``` sh
-Starting up jmock, serving ./ through https
-
-jmock settings:
-CORS: disabled
-Cache: 3600 seconds
-Connection Timeout: 120 seconds
-Directory Listings: visible
-AutoIndex: visible
-Serve GZIP Files: false
-Serve Brotli Files: false
-Default File Extension: none
-
-Available on:
-  https://127.0.0.1:8080
-  https://192.168.1.101:8080
-  https://192.168.1.104:8080
-Hit CTRL-C to stop the server
+```javascript
+module.exports = {
+    // you can write your own logic code and return json as response, mock.js is out of the box as the Mock argument
+    mockTable: {
+        // eslint-disable-next-line no-console
+        '/api/hello': ({ req, query, body, method, Mock }) => {
+            return {
+                code: 200,
+                data: {
+                    method,
+                    query,
+                    body,
+                    data: Mock.mock({
+                        // list is an array contains 1~10 elements
+                        'list|1-10': [{
+                            // id is a number whose initial value is 1, and is increased by 1 each time
+                            'id|+1': 1
+                        }]
+                    }),
+                },
+                message: 'success',
+            }
+        },
+        // you can also use async/await here
+        '/api/world': async ({ req, query, body, method, Mock }) => {
+            return {
+                code: 200,
+                data: {
+                    method,
+                    query,
+                    body,
+                    data: Mock.Random.paragraph(3, 7),
+                },
+                message: 'success',
+            }
+        }
+    },
+}
 ```
 
-# Development
+**Proxy HTTP requests:**
 
-Checkout this repository locally, then:
+Create a file named `jmock.config.js` (if not existed) at the path where you run the `jmock` command. Then add a field `proxyTable` as below and then rerun the `jmock` command:
 
-```sh
-$ npm i
-$ npm start
+```javascript
+module.exports = {
+    // proxy your requests
+    proxyTable: {
+        // the below configuration will proxy /baidu-search?wd=keyword to https://www.baidu.com/s?wd=keyword
+        '/baidu-search': {
+            target: 'https://www.baidu.com',
+            changeOrigin: true,
+            pathRewrite (path) {
+                return path.replace('/baidu-search', '/s')
+            },
+        },
+        // the below configuration will proxy /search?q=keyword to https://cn.bing.com/search?q=keyword
+        '/search': {
+            target: 'https://cn.bing.com',
+            changeOrigin: true,
+            cookieDomainRewrite: '',
+        },
+    },
+}
 ```
 
-*Now you can visit http://localhost:8080 to view your server*
+## Thanks
 
-You should see the turtle image in the screenshot above hosted at that URL. See
-the `./public` folder for demo content.
+jmock is built on top of [`http-server`](https://github.com/http-party/http-server).
