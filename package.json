@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "ready": "npm install",
-    "start": "node ./bin/jmock",
+    "start": "node ./bin/jmock -p 8081",
     "test": "tap --reporter=spec test/*.test.js",
     "test-watch": "tap --reporter=spec --watch test/*.test.js",
     "release": "bash bash/release.sh"

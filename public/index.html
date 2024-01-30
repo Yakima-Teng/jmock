@@ -1,4 +1,4 @@
-<html>
+<html lang="en-US">
   <head>
     <title>node.js http server</title>
   </head>
@@ -6,7 +6,11 @@
 
     <h1>Serving up static files like they were turtles strapped to rockets.</h1>
 
-    <img src="./img/turtle.png"/>
+    <img src="./img/turtle.png" alt="" />
+
+    <script>
+      fetch('/baidu-search?wd=http-proxy-middleware').then(res => res.text()).then(console.log)
+      fetch('/search?q=http-proxy-middleware').then(res => res.text()).then(console.log)
+    </script>
   </body>
 </html>
-

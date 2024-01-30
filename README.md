@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/v/jmock.svg?style=flat-square)](https://www.npmjs.com/package/jmock) [![homebrew](https://img.shields.io/homebrew/v/jmock?style=flat-square)](https://formulae.brew.sh/formula/jmock) [![npm downloads](https://img.shields.io/npm/dm/jmock?color=blue&label=npm%20downloads&style=flat-square)](https://www.npmjs.com/package/jmock)
 [![license](https://img.shields.io/github/license/Yakima-Teng/jmock.svg?style=flat-square)](https://github.com/Yakima-Teng/jmock)
 
-# jmock: a simple static HTTP server
+# jmock: command-line HTTP mock server
 
 jmock is a simple command-line static HTTP server with mock and proxy abilities out of box, which is built on top of [`http-server`](https://github.com/http-party/http-server). It is powerful enough for production usage, but it's simple and hackable enough to be used for testing, local development and learning.
 
