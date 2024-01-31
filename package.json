@@ -1,7 +1,7 @@
 {
   "name": "jmock",
   "version": "1.0.2",
-  "description": "A simple command-line http server with mock and proxy abilities out of box",
+  "description": "A simple command-line http server for mocking data, proxying requests and serving static files",
   "main": "./lib/jmock",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "ready": "npm install",
-    "start": "node ./bin/jmock -p 8081",
+    "start": "node ./bin/jmock -p 8081 --config",
     "test": "tap --reporter=spec test/*.test.js",
     "test-watch": "tap --reporter=spec --watch test/*.test.js",
     "release": "bash bash/release.sh"
@@ -30,7 +30,8 @@
   "files": [
     "lib",
     "bin",
-    "doc"
+    "doc",
+    "jmock.config.js"
   ],
   "man": "./doc/jmock.1",
   "engines": {

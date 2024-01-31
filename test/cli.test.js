@@ -52,14 +52,11 @@ test('setting port via cli - custom port', (t) => {
   getPort().then((port) => {
     const options = ['.', '--port', port];
 
-    console.log('yakima 111111')
     const server = startServer(options);
 
-    console.log('yakima 222222')
     tearDown(server, t);
 
     server.stdout.on('data', (msg) => {
-      console.log('yakima 333333')
       checkServerIsRunning(`http://localhost:${port}`, msg, t);
     });
   });

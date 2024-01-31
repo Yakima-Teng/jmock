@@ -24,6 +24,7 @@ if (argv.h || argv.help) {
     'usage: jmock [path] [options]',
     '',
     'options:',
+    '  --config     Generate a default "jmock.config.js" configuration file',
     '  -p --port    Port to use. If 0, look for open port. [8080]',
     '  -a           Address to use [0.0.0.0]',
     '  -d           Show directory listings [true]',
@@ -139,6 +140,7 @@ else {
 function listen(port) {
   var options = {
     root: argv._[0],
+    config: argv.config,
     cache: argv.c,
     timeout: argv.t,
     showDir: argv.d,

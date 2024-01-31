@@ -38,15 +38,31 @@ module.exports = {
             }
         },
         '/api/world': async ({ req, query, body, method, Mock }) => {
+            // delay reply after 300ms
+            await new Promise((resolve) => {
+                setTimeout(resolve, 300)
+            })
+            if (method === 'GET') {
+                return {
+                    code: 200,
+                    data: {
+                        method,
+                        query,
+                        body,
+                        data: Mock.Random.paragraph(3, 7),
+                    },
+                    message: 'success',
+                }
+            }
             return {
                 code: 200,
                 data: {
                     method,
                     query,
                     body,
-                    data: Mock.Random.paragraph(3, 7),
+                    data: Date.now(),
                 },
-                message: 'success',
+                message: 'it\'s not a GET request.',
             }
         }
     },
