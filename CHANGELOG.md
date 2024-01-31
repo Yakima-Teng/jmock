@@ -8,3 +8,7 @@
 
 - support `jmock --config` command (generate configuration file automatically)
 - add Chinese version of README.md
+
+## 1.0.4
+
+- let configuration file takes effect directly after `jmock --config`

@@ -205,4 +205,4 @@ module.exports = {
 
 ## 致谢
 
-jmock 基于 [`http-server`](https://github.com/http-party/http-server)构件而成。
+jmock 基于 [`http-server`](https://github.com/http-party/http-server)构建而成。
