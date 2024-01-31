@@ -1,6 +1,6 @@
 {
   "name": "jmock",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple command-line http server for mocking data, proxying requests and serving static files",
   "main": "./lib/jmock",
   "repository": {
