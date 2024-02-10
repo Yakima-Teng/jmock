@@ -209,4 +209,4 @@ jmock is built on top of [`http-server`](https://github.com/http-party/http-serv
 
 ## License
 
-Licensed under the MIT license.
+Licensed under the [MIT license]((./LICENSE)).
