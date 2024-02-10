@@ -206,3 +206,7 @@ module.exports = {
 ## Thanks
 
 jmock is built on top of [`http-server`](https://github.com/http-party/http-server).
+
+## License
+
+Licensed under the MIT license.
