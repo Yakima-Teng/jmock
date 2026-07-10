@@ -66,6 +66,7 @@
     "mime": "^1.6.0",
     "minimist": "^1.2.6",
     "mockjs": "^1.1.0",
+    "nsuite": "0.2.5",
     "opener": "^1.5.1",
     "portfinder": "^1.0.28",
     "secure-compare": "3.0.1",

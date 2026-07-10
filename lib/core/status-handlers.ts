@@ -1,5 +1,6 @@
 import he from "he";
-import type { IncomingMessage, ServerResponse } from "node:http";
+import type { ServerResponse } from "node:http";
+import { getError, logError } from "nsuite";
 
 type NextFn = () => void;
 
@@ -66,8 +67,11 @@ export function handle500(
   res.statusCode = 500;
   try {
     res.setHeader("content-type", "text/html");
-  } catch (e) {
+  } catch (err) {
     // errors may have triggered headers being sent already
+    logError(
+      `Error setHeader "content-type" to be "text/html": ${getError(err).message}`,
+    );
   }
   const error = String(
     (opts && opts.error && (opts.error as Error).stack) ||

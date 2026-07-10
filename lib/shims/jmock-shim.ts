@@ -13,7 +13,12 @@ interface ShimOptions {
   buffer?: unknown;
   limit?: unknown;
   headers?: Record<string, string>;
-  onError?: (err: Error, stream: unknown, target: unknown, next: () => void) => void;
+  onError?: (
+    err: Error,
+    stream: unknown,
+    target: unknown,
+    next: () => void,
+  ) => void;
   https?: {
     key?: string;
     cert?: string;
@@ -81,8 +86,5 @@ export default function (options: ShimOptions): https.Server {
     });
   }
 
-  return https.createServer(
-    credentials as ServerOptions,
-    requestHandler,
-  );
-};
+  return https.createServer(credentials as ServerOptions, requestHandler);
+}

@@ -11,6 +11,7 @@ import Mock from "mockjs";
 import coBody from "co-body";
 import secureCompare from "secure-compare";
 import type { IncomingMessage, ServerResponse } from "node:http";
+import {getError, logError} from "nsuite";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const require = createRequire(import.meta.url);
@@ -94,6 +95,7 @@ class Jmock {
       fs.lstatSync("./" + jmockConfigFileName);
       this.jmockConfig = require(jmockConfigPath) as JmockConfig;
     } catch (err) {
+      logError(`Error in Jmock constructor: ${getError(err).message}`)
       if (options.config === true) {
         // eslint-disable-next-line no-sync
         fs.copyFileSync(
@@ -114,6 +116,7 @@ class Jmock {
         fs.lstatSync("./public");
         this.root = "./public";
       } catch (err) {
+        logError(`Error in lstatSync public: ${getError(err).message}`)
         this.root = "./";
       }
     }
@@ -144,8 +147,7 @@ class Jmock {
         : "application/octet-stream";
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const before: any[] =
-      options.before ? options.before.slice() : [];
+    const before: any[] = options.before ? options.before.slice() : [];
 
     if (options.logFn) {
       before.push(function (req: IncomingMessage, res: ServerResponse) {
@@ -316,9 +318,8 @@ class Jmock {
             proxyReq: { path: string },
             req: IncomingMessage,
           ) => {
-            const pathRewrite = (
-              rawOptions as Record<string, unknown>
-            ).pathRewrite;
+            const pathRewrite = (rawOptions as Record<string, unknown>)
+              .pathRewrite;
             if (typeof pathRewrite === "function") {
               proxyReq.path = (
                 pathRewrite as (path: string, req: IncomingMessage) => string
@@ -427,8 +428,6 @@ class Jmock {
 // case convention of HTTP
 //
 export { Jmock };
-export const createServer = function (
-  options: JmockOptions,
-): Jmock {
+export const createServer = function (options: JmockOptions): Jmock {
   return new Jmock(options);
 };

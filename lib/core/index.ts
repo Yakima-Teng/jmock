@@ -5,6 +5,7 @@ import { Readable } from "node:stream";
 import buffer from "node:buffer";
 import mime from "mime";
 import urlJoin from "url-join";
+import { getError, logError } from "nsuite";
 import showDir from "./show-dir/index.ts";
 import status from "./status-handlers.ts";
 import generateEtag from "./etag.ts";
@@ -63,9 +64,7 @@ function ensureUriEncoded(text: string): string {
   return text;
 }
 
-function shouldCompressGzip(
-  req: IncomingMessage,
-): boolean {
+function shouldCompressGzip(req: IncomingMessage): boolean {
   const headers = req.headers;
 
   return (
@@ -158,8 +157,9 @@ function createMiddleware(
     try {
       // You can pass a JSON blob here---useful for CLI use
       opts.mimeTypes = JSON.parse(opts.mimeTypes as string);
-    } catch (e) {
+    } catch (err) {
       // swallow parse errors, treat this as a string mimetype input
+      logError(`Error in parse mimeTypes: ${getError(err).message}`);
     }
     if (typeof opts.mimeTypes === "string") {
       mime.load(opts.mimeTypes);
@@ -187,8 +187,13 @@ function createMiddleware(
 
     if (clientModifiedSince) {
       try {
-        clientModifiedDate = new Date(Date.parse(clientModifiedSince as string));
+        clientModifiedDate = new Date(
+          Date.parse(clientModifiedSince as string),
+        );
       } catch (err) {
+        logError(
+          `Error in parse clientModifiedSince=${clientModifiedSince}: ${getError(err).message}`,
+        );
         return false;
       }
 
@@ -240,10 +245,7 @@ function createMiddleware(
     }
 
     file = path.normalize(
-      path.join(
-        root,
-        path.relative(path.join("/", baseDir), pathname!),
-      ),
+      path.join(root, path.relative(path.join("/", baseDir), pathname!)),
     );
     gzippedFile = `${file}.gz`;
     brotliFile = `${file}.br`;
@@ -358,7 +360,8 @@ function createMiddleware(
       res.setHeader("content-length", stat.size);
       res.setHeader("content-type", contentType);
 
-      res.statusCode = (req as IncomingMessage & { statusCode?: number }).statusCode || 200;
+      res.statusCode =
+        (req as IncomingMessage & { statusCode?: number }).statusCode || 200;
 
       if (req.method === "HEAD") {
         res.end();
@@ -382,7 +385,10 @@ function createMiddleware(
       try {
         fs.stat(file!, (err, stat) => {
           if (err && (err.code === "ENOENT" || err.code === "ENOTDIR")) {
-            if ((req as IncomingMessage & { statusCode?: number }).statusCode === 404) {
+            if (
+              (req as IncomingMessage & { statusCode?: number }).statusCode ===
+              404
+            ) {
               status[404](res, next);
             } else if (
               !path.extname(parsed.pathname || "").length &&

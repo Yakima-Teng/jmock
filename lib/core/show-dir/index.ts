@@ -26,7 +26,7 @@ interface ShowDirOptions {
   weakEtags: boolean;
 }
 
-export default (opts: ShowDirOptions, _stat?: Stats) => {
+export default (opts: ShowDirOptions) => {
   const cache = opts.cache;
   const root = path.resolve(opts.root || "");
   const baseDir = opts.baseDir;
@@ -37,7 +37,11 @@ export default (opts: ShowDirOptions, _stat?: Stats) => {
   const si = opts.si;
   const weakEtags = opts.weakEtags;
 
-  return function middleware(req: IncomingMessage, res: ServerResponse, next: NextFn) {
+  return function middleware(
+    req: IncomingMessage,
+    res: ServerResponse,
+    next: NextFn,
+  ) {
     const parsed = url.parse(req.url || "", false);
     const pathname = decodeURIComponent(parsed.pathname || "");
     const dir = path.normalize(
@@ -108,7 +112,9 @@ export default (opts: ShowDirOptions, _stat?: Stats) => {
 
             const displayName = he.encode(name) + (isDir ? "/" : "");
             const ext = name.split(".").pop() || "";
-            const classForNonDir = supportedIcons[ext as keyof typeof supportedIcons]
+            const classForNonDir = supportedIcons[
+              ext as keyof typeof supportedIcons
+            ]
               ? ext
               : "_page";
             const iconClass = `icon-${isDir ? "_blank" : classForNonDir}`;
