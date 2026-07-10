@@ -4,81 +4,80 @@
 
 # jmock
 
-jmock is a simple command-line http server for mocking data, proxying requests and serving static files.
+一个简单易用的命令行 HTTP 服务器，支持数据模拟（Mock）、请求代理（Proxy）和静态文件服务。
 
 ![cute jmock](./screenshots/public.jpg)
 
-## Installation
+## 特性
 
-### Running on-demand
+- ⚡ **开箱即用**：一条命令启动 HTTP 服务器，支持静态文件服务
+- 🎯 **数据模拟**：基于 Mock.js 的强大数据模拟能力，快速生成假数据接口
+- 🔀 **请求代理**：内置代理功能，轻松解决跨域问题
+- 📄 **自动目录浏览**：支持目录列表展示，方便浏览静态资源
+- 🔒 **HTTPS 支持**：可配置 HTTPS 证书，支持安全访问
 
-Using `npx` you can run the script without installing it first:
+## 技术栈
 
-```bash
-npx jmock [path] [options]
-```
+- ⚙️ **运行时**：Node.js >= 22.18
+- 📘 **语言**：TypeScript / ES Module
+- 🧰 **工具**：ESLint、Prettier、markdownlint-cli2
+- 🔧 **依赖**：http-proxy、mockjs、union、chalk
 
-### Globally via `npm` (RECOMMENDED)
+## 环境要求
+
+- 📦 Node.js >= 22.18（详见 [.nvmrc](./.nvmrc)）
+
+## 安装
+
+### 全局安装（推荐）
 
 ```bash
 npm install --global jmock
 ```
 
-This will install `jmock` globally so that it may be run from the command line anywhere.
+全局安装后可在任意目录使用 `jmock` 命令。
 
-### As a dependency in your `npm` package
+### 按需运行
+
+使用 `npx` 无需安装即可运行：
+
+```bash
+npx jmock [path] [options]
+```
+
+### 作为项目依赖安装
 
 ```bash
 npm install jmock
 ```
 
-## Usage
+## 使用
 
 ```bash
 jmock [path] [options]
 ```
 
-`[path]` defaults to `./public` if the folder exists, and `./` otherwise.
+`[path]` 默认为 `./public`（如果存在），否则为 `./`。
 
-Now you can visit [http://localhost:8080](http://localhost:8080) to view your server
+启动后访问 [http://localhost:8080](http://localhost:8080) 即可查看服务器。
 
-**Use a specified port:**
+### 选项
 
-```bash
-jmock -p 8082
-```
+| 选项        | 说明                                             |
+| ----------- | ------------------------------------------------ |
+| `-p <port>` | 指定端口号，如 `jmock -p 8082`                   |
+| `--cors`    | 启用 CORS，通过 `Access-Control-Allow-Origin` 头 |
+| `-o <path>` | 启动后自动打开指定路径                           |
+| `--config`  | 生成默认配置文件 `jmock.config.mjs`              |
 
-**Enable CORS via the Access-Control-Allow-Origin header:**
+### 数据模拟（Mock）
 
-```bash
-jmock --cors
-```
-
-**Open path after starting the server:**
-
-```bash
-jmock -o /path
-```
-
-**Generate a default configuration file with example code:**
-
-```bash
-jmock --config
-```
-
-The above code will generate a file named `jmock.config.js` with example configuration code (easy to understand). It's used for mocking data and proxying requests. For details, please refer to the introduction below.
-
-**Mock data as HTTP response:**
-
-Create a file named `jmock.config.js` (if not existed) at the path where you run the `jmock` command. Then add a field `mockTable` as below and then rerun the `jmock` command:
-
-Tip: you can make use of the function arguments: `req`, `query`, `body`, `method`, and `Mock` ([Mock.js](https://www.npmjs.com/package/mockjs) is a convenient tools used for generating mocking data).
+创建 `jmock.config.mjs` 配置文件，添加 `mockTable` 字段：
 
 ```javascript
-module.exports = {
-  // you can write your own logic code and return json as response, mock.js is out of the box as the Mock argument
+export default {
   mockTable: {
-    // eslint-disable-next-line no-console
+    // 支持 req、query、body、method、Mock 参数
     "/api/hello": ({ req, query, body, method, Mock }) => {
       return {
         code: 200,
@@ -87,24 +86,15 @@ module.exports = {
           query,
           body,
           data: Mock.mock({
-            // list is an array contains 1~10 elements
-            "list|1-10": [
-              {
-                // id is a number whose initial value is 1, and is increased by 1 each time
-                "id|+1": 1,
-              },
-            ],
+            "list|1-10": [{ "id|+1": 1 }],
           }),
         },
         message: "success",
       };
     },
-    // you can also use async/await here
-    "/api/world": async ({ req, query, body, method, Mock }) => {
-      // delay reply after 300ms
-      await new Promise((resolve) => {
-        setTimeout(resolve, 300);
-      });
+    // 支持 async/await
+    "/api/world": async ({ query, body, method, Mock }) => {
+      await new Promise((resolve) => setTimeout(resolve, 300));
       if (method === "GET") {
         return {
           code: 200,
@@ -119,12 +109,7 @@ module.exports = {
       }
       return {
         code: 200,
-        data: {
-          method,
-          query,
-          body,
-          data: Date.now(),
-        },
+        data: { method, query, body, data: Date.now() },
         message: "it's not a GET request.",
       };
     },
@@ -132,7 +117,7 @@ module.exports = {
 };
 ```
 
-With the `mockTable` configuration above, http request to path `/api/world` as below:
+启动服务器后，请求 `/api/world?c=1&d=hello`：
 
 ```javascript
 fetch("/api/world?c=1&d=hello", {
@@ -143,47 +128,33 @@ fetch("/api/world?c=1&d=hello", {
   method: "POST",
   body: JSON.stringify({ a: 11, b: 22 }),
 })
-  .then((res) => {
-    return res.json();
-  })
-  .then((res) => {
-    console.log(res.data);
-  })
-  .catch((res) => {
-    console.log(res);
-  });
+  .then((res) => res.json())
+  .then((res) => console.log(res.data));
 ```
 
-will get response data like:
+响应示例：
 
 ```json
 {
   "code": 200,
   "data": {
     "method": "POST",
-    "query": {
-      "c": "1",
-      "d": "hello"
-    },
-    "body": {
-      "a": 11,
-      "b": 22
-    },
+    "query": { "c": "1", "d": "hello" },
+    "body": { "a": 11, "b": 22 },
     "data": 1706670742590
   },
   "message": "it's not a GET request."
 }
 ```
 
-**Proxy HTTP requests:**
+### 请求代理（Proxy）
 
-Create a file named `jmock.config.js` (if not existed) at the path where you run the `jmock` command. Then add a field `proxyTable` as below and then rerun the `jmock` command:
+在 `jmock.config.mjs` 中添加 `proxyTable` 字段：
 
 ```javascript
-module.exports = {
-  // proxy your requests
+export default {
   proxyTable: {
-    // the below configuration will proxy /baidu-search?wd=keyword to https://www.baidu.com/s?wd=keyword
+    // 将 /baidu-search?wd=keyword 代理到 https://www.baidu.com/s?wd=keyword
     "/baidu-search": {
       target: "https://www.baidu.com",
       changeOrigin: true,
@@ -191,7 +162,7 @@ module.exports = {
         return path.replace("/baidu-search", "/s");
       },
     },
-    // the below configuration will proxy /search?q=keyword to https://cn.bing.com/search?q=keyword
+    // 将 /search?q=keyword 代理到 https://cn.bing.com/search?q=keyword
     "/search": {
       target: "https://cn.bing.com",
       changeOrigin: true,
@@ -201,10 +172,55 @@ module.exports = {
 };
 ```
 
-## Thanks
+### 生成配置文件
 
-jmock is built on top of [`http-server`](https://github.com/http-party/http-server) and [Mock.js](https://github.com/nuysoft/Mock).
+```bash
+jmock --config
+```
 
-## License
+将在当前目录生成 `jmock.config.mjs` 文件，内含详细的示例代码。
 
-Licensed under the [Apache License 2.0](./LICENSE).
+## 开发
+
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器（端口 8081，加载配置文件）
+npm start
+
+# 运行测试
+npm test
+
+# 监听模式运行测试
+npm run test-watch
+
+# 代码格式化
+npm run format
+
+# 代码检查
+npm run lint:code
+
+# 类型检查
+npm run typecheck
+
+# 全部检查（格式化 + lint + 类型检查 + 测试）
+npm run lint
+```
+
+## 截图
+
+|               启动界面               |                 目录浏览                 |
+| :----------------------------------: | :--------------------------------------: |
+| ![启动界面](./screenshots/start.png) | ![目录浏览](./screenshots/directory.png) |
+
+## 致谢
+
+jmock 基于以下项目构建：
+
+- [http-server](https://github.com/http-party/http-server)
+- [Mock.js](https://github.com/nuysoft/Mock)
+
+## 协议
+
+📄 [Apache License 2.0](./LICENSE)
