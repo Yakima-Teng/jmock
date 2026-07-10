@@ -29,12 +29,6 @@ interface ShimOptions {
 
 export default function (options: ShimOptions): https.Server {
   const isArray = Array.isArray(options.after);
-  let credentials: {
-    key: string | Buffer;
-    cert: string | Buffer;
-    passphrase?: string;
-    ca?: (string | Buffer)[];
-  };
 
   if (!options) {
     throw new Error("options is required to create a server");
@@ -70,7 +64,12 @@ export default function (options: ShimOptions): https.Server {
     throw new Error("Both options key and cert are required.");
   }
 
-  credentials = {
+  const credentials: {
+    key: string | Buffer;
+    cert: string | Buffer;
+    passphrase?: string;
+    ca?: (string | Buffer)[];
+  } = {
     key: fs.readFileSync(serverOptions.key).toString(),
     cert: fs.readFileSync(serverOptions.cert).toString(),
     passphrase: process.env.NODE_JMOCK_SSL_PASSPHRASE,

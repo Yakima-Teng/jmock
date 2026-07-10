@@ -11,7 +11,7 @@ import Mock from "mockjs";
 import coBody from "co-body";
 import secureCompare from "secure-compare";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import {getError, logError} from "nsuite";
+import { getError, logError } from "nsuite";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const require = createRequire(import.meta.url);
@@ -95,7 +95,7 @@ class Jmock {
       fs.lstatSync("./" + jmockConfigFileName);
       this.jmockConfig = require(jmockConfigPath) as JmockConfig;
     } catch (err) {
-      logError(`Error in Jmock constructor: ${getError(err).message}`)
+      logError(`Error in Jmock constructor: ${getError(err).message}`);
       if (options.config === true) {
         // eslint-disable-next-line no-sync
         fs.copyFileSync(
@@ -116,7 +116,7 @@ class Jmock {
         fs.lstatSync("./public");
         this.root = "./public";
       } catch (err) {
-        logError(`Error in lstatSync public: ${getError(err).message}`)
+        logError(`Error in lstatSync public: ${getError(err).message}`);
         this.root = "./";
       }
     }
