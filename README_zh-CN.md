@@ -209,4 +209,4 @@ jmock 基于 [`http-server`](https://github.com/http-party/http-server)构建而
 
 ## 协议
 
-[MIT license](./LICENSE).
+[Apache License 2.0](./LICENSE).
