@@ -3,10 +3,10 @@
 ## Supported Versions
 
 | Version  | Supported                            |
-|----------|--------------------------------------|
+| -------- | ------------------------------------ |
 | 2.x      | ✔️ Yes                               |
 | 1.x      | 🔐 Security updates until April 2024 |
-| <= 0.1.x | ❌ No                                 |
+| <= 0.1.x | ❌ No                                |
 
 ## Reporting a Vulnerability
 

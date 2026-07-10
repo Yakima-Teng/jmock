@@ -30,7 +30,7 @@
     "deploy:npm": "npm --registry=https://registry.npmjs.org publish",
     "deploy": "npm run deploy:qiniu && npm run deploy:github && npm run deploy:npm",
     "format": "prettier --write \"**/*.{js,json,md}\"",
-    "lint:code": "eslint lib/ bin/ jmock.config.js",
+    "lint:code": "eslint lib/ bin/ jmock.config.js --fix",
     "lint:markdown": "markdownlint-cli2",
     "typecheck": "echo 'No TypeScript configuration found, skipping type check'",
     "lint": "npm run format && npm run lint:code && npm run lint:markdown && npm run typecheck && npm run test"

@@ -28,7 +28,6 @@ npm install --global jmock
 
 全局安装后，你可以在电脑的任意位置直接通过命令行执行 `jmock` 命令。这样使用起来会非常方便。
 
-
 #### 作为 `npm` 项目的本地依赖
 
 ```bash
@@ -79,81 +78,82 @@ jmock --config
 
 ```javascript
 module.exports = {
-    // you can write your own logic code and return json as response, mock.js is out of the box as the Mock argument
-    mockTable: {
-        // eslint-disable-next-line no-console
-        '/api/hello': ({ req, query, body, method, Mock }) => {
-            return {
-                code: 200,
-                data: {
-                    method,
-                    query,
-                    body,
-                    data: Mock.mock({
-                        // list is an array contains 1~10 elements
-                        'list|1-10': [{
-                            // id is a number whose initial value is 1, and is increased by 1 each time
-                            'id|+1': 1
-                        }]
-                    }),
-                },
-                message: 'success',
-            }
+  // you can write your own logic code and return json as response, mock.js is out of the box as the Mock argument
+  mockTable: {
+    // eslint-disable-next-line no-console
+    "/api/hello": ({ req, query, body, method, Mock }) => {
+      return {
+        code: 200,
+        data: {
+          method,
+          query,
+          body,
+          data: Mock.mock({
+            // list is an array contains 1~10 elements
+            "list|1-10": [
+              {
+                // id is a number whose initial value is 1, and is increased by 1 each time
+                "id|+1": 1,
+              },
+            ],
+          }),
         },
-        // you can also use async/await here
-        '/api/world': async ({ req, query, body, method, Mock }) => {
-            // delay reply after 300ms
-            await new Promise((resolve) => {
-                setTimeout(resolve, 300)
-            })
-            if (method === 'GET') {
-                return {
-                    code: 200,
-                    data: {
-                        method,
-                        query,
-                        body,
-                        data: Mock.Random.paragraph(3, 7),
-                    },
-                    message: 'success',
-                }
-            }
-            return {
-                code: 200,
-                data: {
-                    method,
-                    query,
-                    body,
-                    data: Date.now(),
-                },
-                message: 'it\'s not a GET request.',
-            }
-        }
+        message: "success",
+      };
     },
-}
+    // you can also use async/await here
+    "/api/world": async ({ req, query, body, method, Mock }) => {
+      // delay reply after 300ms
+      await new Promise((resolve) => {
+        setTimeout(resolve, 300);
+      });
+      if (method === "GET") {
+        return {
+          code: 200,
+          data: {
+            method,
+            query,
+            body,
+            data: Mock.Random.paragraph(3, 7),
+          },
+          message: "success",
+        };
+      }
+      return {
+        code: 200,
+        data: {
+          method,
+          query,
+          body,
+          data: Date.now(),
+        },
+        message: "it's not a GET request.",
+      };
+    },
+  },
+};
 ```
 
 以上面的 `mockTable` 配置为例，假设现在有如下的请求发送到 `/api/world` 路径：
 
 ```javascript
-fetch("/api/world?c=1&d=hello",
-        {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({a: 11, b: 22})
-        })
-        .then((res) => {
-            return res.json()
-        })
-        .then((res) => {
-            console.log(res.data)
-        })
-        .catch((res) => {
-            console.log(res)
-        })
+fetch("/api/world?c=1&d=hello", {
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+  method: "POST",
+  body: JSON.stringify({ a: 11, b: 22 }),
+})
+  .then((res) => {
+    return res.json();
+  })
+  .then((res) => {
+    console.log(res.data);
+  })
+  .catch((res) => {
+    console.log(res);
+  });
 ```
 
 我们会得到如下这般的响应数据：
@@ -183,24 +183,24 @@ fetch("/api/world?c=1&d=hello",
 
 ```javascript
 module.exports = {
-    // proxy your requests
-    proxyTable: {
-        // the below configuration will proxy /baidu-search?wd=keyword to https://www.baidu.com/s?wd=keyword
-        '/baidu-search': {
-            target: 'https://www.baidu.com',
-            changeOrigin: true,
-            pathRewrite (path) {
-                return path.replace('/baidu-search', '/s')
-            },
-        },
-        // the below configuration will proxy /search?q=keyword to https://cn.bing.com/search?q=keyword
-        '/search': {
-            target: 'https://cn.bing.com',
-            changeOrigin: true,
-            cookieDomainRewrite: '',
-        },
+  // proxy your requests
+  proxyTable: {
+    // the below configuration will proxy /baidu-search?wd=keyword to https://www.baidu.com/s?wd=keyword
+    "/baidu-search": {
+      target: "https://www.baidu.com",
+      changeOrigin: true,
+      pathRewrite(path) {
+        return path.replace("/baidu-search", "/s");
+      },
     },
-}
+    // the below configuration will proxy /search?q=keyword to https://cn.bing.com/search?q=keyword
+    "/search": {
+      target: "https://cn.bing.com",
+      changeOrigin: true,
+      cookieDomainRewrite: "",
+    },
+  },
+};
 ```
 
 ## 致谢
