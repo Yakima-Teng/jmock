@@ -415,7 +415,7 @@ class Jmock {
   }
 
   listen(...args: unknown[]): void {
-    this.server.listen.apply(this.server, args);
+    this.server.listen(...args);
   }
 
   close(): void {
