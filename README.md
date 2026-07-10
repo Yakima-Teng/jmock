@@ -4,9 +4,9 @@
 
 # jmock
 
-一个简单易用的命令行 HTTP 服务器，支持数据模拟（Mock）、请求代理（Proxy）和静态文件服务。
+![项目截图](./screenshots/screenshot.png)
 
-![cute jmock](./screenshots/public.jpg)
+jmock 一个简单易用的命令行 HTTP 服务器，支持数据模拟（Mock）、请求代理（Proxy）和静态文件服务。
 
 ## 特性
 
@@ -207,10 +207,6 @@ npm run typecheck
 # 全部检查（格式化 + lint + 类型检查 + 测试）
 npm run lint
 ```
-
-## 截图
-
-![启动界面](./screenshots/screenshot.png)
 
 ## 致谢
 
