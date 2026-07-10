@@ -1,31 +1,45 @@
 "use strict";
 
-const t = require("tap");
+const { describe, it } = require("node:test");
+const assert = require("node:assert");
 const fs = require("fs");
 const path = require("path");
 
-t.test("project structure", (t) => {
+describe("project structure", () => {
   const rootDir = path.join(__dirname, "..");
-  t.ok(fs.existsSync(rootDir), "project root exists");
-  t.ok(
-    fs.existsSync(path.join(rootDir, "package.json")),
-    "package.json exists",
-  );
-  t.ok(fs.existsSync(path.join(rootDir, "lib")), "lib directory exists");
-  t.ok(fs.existsSync(path.join(rootDir, "bin")), "bin directory exists");
-  t.end();
+
+  it("project root exists", () => {
+    assert.ok(fs.existsSync(rootDir), "project root exists");
+  });
+
+  it("package.json exists", () => {
+    assert.ok(
+      fs.existsSync(path.join(rootDir, "package.json")),
+      "package.json exists",
+    );
+  });
+
+  it("lib directory exists", () => {
+    assert.ok(fs.existsSync(path.join(rootDir, "lib")), "lib directory exists");
+  });
+
+  it("bin directory exists", () => {
+    assert.ok(fs.existsSync(path.join(rootDir, "bin")), "bin directory exists");
+  });
 });
 
-t.test("jmock module loads", (t) => {
-  t.doesNotThrow(() => {
-    require("../lib/jmock");
-  }, "jmock module loads without error");
-  t.end();
+describe("jmock module loads", () => {
+  it("jmock module loads without error", () => {
+    assert.doesNotThrow(() => {
+      require("../lib/jmock");
+    }, "jmock module loads without error");
+  });
 });
 
-t.test("config loads", (t) => {
-  t.doesNotThrow(() => {
-    require("../jmock.config");
-  }, "jmock.config loads without error");
-  t.end();
+describe("config loads", () => {
+  it("jmock.config loads without error", () => {
+    assert.doesNotThrow(() => {
+      require("../jmock.config");
+    }, "jmock.config loads without error");
+  });
 });

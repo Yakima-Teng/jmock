@@ -23,8 +23,8 @@
   "scripts": {
     "ready": "npm install",
     "start": "node ./bin/jmock -p 8081 --config",
-    "test": "tap --reporter=spec test/*.test.js",
-    "test-watch": "tap --reporter=spec --watch test/*.test.js",
+    "test": "node --test test/*.test.js",
+    "test-watch": "node --test --watch test/*.test.js",
     "deploy:github": "bash bash/github-deploy.sh",
     "deploy:qiniu": "node build/deploy.mjs",
     "deploy:npm": "npm --registry=https://registry.npmjs.org publish",
@@ -46,7 +46,7 @@
     "package-lock.json"
   ],
   "engines": {
-    "node": ">=12.16"
+    "node": ">=22.18"
   },
   "contributors": [
     {
@@ -79,8 +79,7 @@
     "express": "^4.17.1",
     "markdownlint-cli2": "^0.13.0",
     "prettier": "3.9.5",
-    "request": "^2.88.2",
-    "tap": "^14.11.0"
+    "request": "^2.88.2"
   },
   "bugs": {
     "url": "https://github.com/Yakima-Teng/jmock/issues"
