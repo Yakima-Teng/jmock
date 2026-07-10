@@ -2,7 +2,8 @@
   "name": "jmock",
   "version": "1.0.4",
   "description": "A simple command-line http server for mocking data, proxying requests and serving static files",
-  "main": "./lib/jmock",
+  "type": "module",
+  "main": "./lib/jmock.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/Yakima-Teng/jmock.git"
@@ -23,8 +24,8 @@
   "scripts": {
     "ready": "npm install",
     "start": "node ./bin/jmock -p 8081 --config",
-    "test": "node --test test/*.test.js",
-    "test-watch": "node --test --watch test/*.test.js",
+    "test": "node --test test/*.test.ts",
+    "test-watch": "node --test --watch test/*.test.ts",
     "deploy:github": "bash bash/github-deploy.sh",
     "deploy:qiniu": "node build/deploy.mjs",
     "deploy:npm": "npm --registry=https://registry.npmjs.org publish",
@@ -32,13 +33,13 @@
     "lint:markdown": "markdownlint-cli2",
     "format": "prettier . --write",
     "lint:code": "eslint . --fix",
-    "typecheck": "echo 'No TypeScript configuration found, skipping type check'",
+    "typecheck": "tsc --noEmit",
     "lint": "npm run format && npm run lint:code && npm run lint:markdown && npm run typecheck && npm run test"
   },
   "files": [
     "lib",
     "bin",
-    "jmock.config.js",
+    "jmock.config.mjs",
     "README.md",
     "LICENSE",
     "NOTICE",
@@ -72,6 +73,9 @@
     "url-join": "^4.0.1"
   },
   "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "8.63.0",
+    "@typescript-eslint/parser": "8.63.0",
     "better-deploy": "^0.0.15",
     "eol": "^0.9.1",
     "eslint": "8.57.1",
@@ -79,7 +83,8 @@
     "express": "^4.17.1",
     "markdownlint-cli2": "^0.13.0",
     "prettier": "3.9.5",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "typescript": "^5.7.0"
   },
   "bugs": {
     "url": "https://github.com/Yakima-Teng/jmock/issues"

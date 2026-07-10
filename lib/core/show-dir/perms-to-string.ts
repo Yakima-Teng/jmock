@@ -1,6 +1,6 @@
-"use strict";
+import type { Stats } from "node:fs";
 
-module.exports = function permsToString(stat) {
+export default function permsToString(stat: Stats): string {
   if (!stat.isDirectory || !stat.mode) {
     return "???!!!???";
   }
@@ -21,4 +21,4 @@ module.exports = function permsToString(stat) {
       )
       .join("")
   );
-};
+}

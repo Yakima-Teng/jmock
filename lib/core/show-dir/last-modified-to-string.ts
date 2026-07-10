@@ -1,6 +1,6 @@
-"use strict";
+import type { Stats } from "node:fs";
 
-module.exports = function lastModifiedToString(stat) {
+export default function lastModifiedToString(stat: Stats): string {
   const t = new Date(stat.mtime);
   return (
     ("0" + t.getDate()).slice(-2) +
@@ -13,4 +13,4 @@ module.exports = function lastModifiedToString(stat) {
     ":" +
     ("0" + t.getMinutes()).slice(-2)
   );
-};
+}

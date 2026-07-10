@@ -1,15 +1,14 @@
-"use strict";
+import he from "he";
+import type { IncomingMessage, ServerResponse } from "node:http";
 
-const he = require("he");
+type NextFn = () => void;
 
-// not modified
-exports["304"] = (res) => {
+export function handle304(res: ServerResponse): void {
   res.statusCode = 304;
   res.end();
-};
+}
 
-// access denied
-exports["403"] = (res, next) => {
+export function handle403(res: ServerResponse, next?: NextFn): void {
   res.statusCode = 403;
   if (typeof next === "function") {
     next();
@@ -19,10 +18,13 @@ exports["403"] = (res, next) => {
     res.setHeader("content-type", "text/plain");
     res.end("ACCESS DENIED");
   }
-};
+}
 
-// disallowed method
-exports["405"] = (res, next, opts) => {
+export function handle405(
+  res: ServerResponse,
+  next?: NextFn,
+  opts?: { allow?: string },
+): void {
   res.statusCode = 405;
   if (typeof next === "function") {
     next();
@@ -30,10 +32,9 @@ exports["405"] = (res, next, opts) => {
   }
   res.setHeader("allow", (opts && opts.allow) || "GET, HEAD");
   res.end();
-};
+}
 
-// not found
-exports["404"] = (res, next) => {
+export function handle404(res: ServerResponse, next?: NextFn): void {
   res.statusCode = 404;
   if (typeof next === "function") {
     next();
@@ -43,9 +44,9 @@ exports["404"] = (res, next) => {
     res.setHeader("content-type", "text/plain");
     res.end("File not found. :(");
   }
-};
+}
 
-exports["416"] = (res, next) => {
+export function handle416(res: ServerResponse, next?: NextFn): void {
   res.statusCode = 416;
   if (typeof next === "function") {
     next();
@@ -55,17 +56,24 @@ exports["416"] = (res, next) => {
     res.setHeader("content-type", "text/plain");
     res.end("Requested range not satisfiable");
   }
-};
+}
 
-// flagrant error
-exports["500"] = (res, next, opts) => {
+export function handle500(
+  res: ServerResponse,
+  next?: NextFn,
+  opts?: { error: Error | string },
+): void {
   res.statusCode = 500;
   try {
     res.setHeader("content-type", "text/html");
   } catch (e) {
-    // errors may have triggered headers being sent already, make sure we don't hide the underlying error
+    // errors may have triggered headers being sent already
   }
-  const error = String(opts.error.stack || opts.error || "No specified error");
+  const error = String(
+    (opts && opts.error && (opts.error as Error).stack) ||
+      (opts && opts.error) ||
+      "No specified error",
+  );
   const html = `${[
     "<!doctype html>",
     "<html>",
@@ -81,10 +89,13 @@ exports["500"] = (res, next, opts) => {
     "</html>",
   ].join("\n")}\n`;
   res.end(html);
-};
+}
 
-// bad request
-exports["400"] = (res, next, opts) => {
+export function handle400(
+  res: ServerResponse,
+  next?: NextFn,
+  opts?: { error?: Error | string },
+): void {
   res.statusCode = 400;
   res.setHeader("content-type", "text/html");
   const error = opts && opts.error ? String(opts.error) : "Malformed request.";
@@ -103,4 +114,20 @@ exports["400"] = (res, next, opts) => {
     "</html>",
   ].join("\n")}\n`;
   res.end(html);
+}
+
+const status: Record<
+  string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (...args: any[]) => void
+> = {
+  "304": handle304,
+  "400": handle400,
+  "403": handle403,
+  "404": handle404,
+  "405": handle405,
+  "416": handle416,
+  "500": handle500,
 };
+
+export default status;

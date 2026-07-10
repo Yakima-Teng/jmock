@@ -203,7 +203,7 @@ module.exports = {
 
 ## Thanks
 
-jmock is built on top of [`http-server`](https://github.com/http-party/http-server).
+jmock is built on top of [`http-server`](https://github.com/http-party/http-server) and [Mock.js](https://github.com/nuysoft/Mock).
 
 ## License
 

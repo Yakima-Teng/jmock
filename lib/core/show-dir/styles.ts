@@ -1,6 +1,4 @@
-"use strict";
-
-const icons = require("./icons.json");
+import icons from "./icons.json" with { type: "json" };
 
 const IMG_SIZE = 16;
 
@@ -10,11 +8,10 @@ css += "td.perms {}\n";
 css += "td.file-size { text-align: right; padding-left: 1em; }\n";
 css += "td.display-name { padding-left: 1em; }\n";
 
-Object.keys(icons).forEach((key) => {
+for (const key of Object.keys(icons)) {
   css += `i.icon-${key} {\n`;
-  css += `  background-image: url("data:image/png;base64,${icons[key]}");\n`;
+  css += `  background-image: url("data:image/png;base64,${(icons as Record<string, string>)[key]}");\n`;
   css += "}\n\n";
-});
+}
 
-exports.icons = icons;
-exports.css = css;
+export { icons, css };

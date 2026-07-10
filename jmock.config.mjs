@@ -1,6 +1,4 @@
-"use strict";
-
-module.exports = {
+export default {
   // proxy your requests
   proxyTable: {
     // the below configuration will proxy /baidu-search?wd=keyword to https://www.baidu.com/s?wd=keyword
@@ -20,7 +18,6 @@ module.exports = {
   },
   // you can write your own logic code and return json as response, mock.js is out of the box as the Mock argument
   mockTable: {
-    // eslint-disable-next-line no-console
     "/api/hello": ({ req, query, body, method, Mock }) => {
       return {
         code: 200,

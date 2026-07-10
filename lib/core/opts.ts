@@ -1,34 +1,77 @@
-"use strict";
+import defaults from "./defaults.json" with { type: "json" };
+import aliases from "./aliases.json" with { type: "json" };
 
-// This is so you can have options aliasing and defaults in one place.
+interface JmockOptions {
+  autoIndex?: boolean;
+  showDir?: boolean;
+  showDotfiles?: boolean;
+  humanReadable?: boolean;
+  hidePermissions?: boolean;
+  si?: boolean;
+  cache?: string | number | ((pathname: string) => string | number);
+  gzip?: boolean;
+  brotli?: boolean;
+  defaultExt?: string;
+  handleError?: boolean;
+  cors?: boolean | string;
+  headers?: string | string[] | Record<string, string>;
+  contentType?: string;
+  mimeTypes?: string | Record<string, string>;
+  weakEtags?: boolean;
+  weakCompare?: boolean;
+  handleOptionsMethod?: boolean;
+  baseDir?: string;
+  root?: string;
+  [key: string]: unknown;
+}
 
-const defaults = require("./defaults.json");
-const aliases = require("./aliases.json");
+interface ParsedOptions {
+  cache: string | number | ((pathname: string) => string | number);
+  autoIndex: boolean;
+  showDir: boolean;
+  showDotfiles: boolean;
+  humanReadable: boolean;
+  hidePermissions: boolean;
+  si: boolean;
+  defaultExt: string;
+  baseDir: string;
+  gzip: boolean;
+  brotli: boolean;
+  handleError: boolean;
+  headers: Record<string, string | boolean>;
+  contentType: string;
+  mimeTypes?: string | Record<string, string>;
+  weakEtags: boolean;
+  weakCompare: boolean;
+  handleOptionsMethod: boolean;
+  root?: string;
+}
 
-module.exports = (opts) => {
+export default (opts?: JmockOptions): ParsedOptions => {
   let autoIndex = defaults.autoIndex;
   let showDir = defaults.showDir;
   let showDotfiles = defaults.showDotfiles;
   let humanReadable = defaults.humanReadable;
   let hidePermissions = defaults.hidePermissions;
   let si = defaults.si;
-  let cache = defaults.cache;
+  let cache: string | number | ((pathname: string) => string | number) =
+    defaults.cache;
   let gzip = defaults.gzip;
   let brotli = defaults.brotli;
   let defaultExt = defaults.defaultExt;
   let handleError = defaults.handleError;
-  const headers = {};
+  const headers: Record<string, string | boolean> = {};
   let contentType = defaults.contentType;
-  let mimeTypes;
+  let mimeTypes: string | Record<string, string> | undefined;
   let weakEtags = defaults.weakEtags;
   let weakCompare = defaults.weakCompare;
   let handleOptionsMethod = defaults.handleOptionsMethod;
 
-  function isDeclared(k) {
-    return typeof opts[k] !== "undefined" && opts[k] !== null;
+  function isDeclared(k: string): boolean {
+    return typeof opts![k] !== "undefined" && opts![k] !== null;
   }
 
-  function setHeader(str) {
+  function setHeader(str: string): void {
     const m = /^(.+?)\s*:\s*(.*)$/.exec(str);
     if (!m) {
       headers[str] = true;
@@ -40,7 +83,7 @@ module.exports = (opts) => {
   if (opts) {
     aliases.autoIndex.some((k) => {
       if (isDeclared(k)) {
-        autoIndex = opts[k];
+        autoIndex = opts![k] as boolean;
         return true;
       }
       return false;
@@ -48,7 +91,7 @@ module.exports = (opts) => {
 
     aliases.showDir.some((k) => {
       if (isDeclared(k)) {
-        showDir = opts[k];
+        showDir = opts![k] as boolean;
         return true;
       }
       return false;
@@ -56,7 +99,7 @@ module.exports = (opts) => {
 
     aliases.showDotfiles.some((k) => {
       if (isDeclared(k)) {
-        showDotfiles = opts[k];
+        showDotfiles = opts![k] as boolean;
         return true;
       }
       return false;
@@ -64,7 +107,7 @@ module.exports = (opts) => {
 
     aliases.humanReadable.some((k) => {
       if (isDeclared(k)) {
-        humanReadable = opts[k];
+        humanReadable = opts![k] as boolean;
         return true;
       }
       return false;
@@ -72,7 +115,7 @@ module.exports = (opts) => {
 
     aliases.hidePermissions.some((k) => {
       if (isDeclared(k)) {
-        hidePermissions = opts[k];
+        hidePermissions = opts![k] as boolean;
         return true;
       }
       return false;
@@ -80,7 +123,7 @@ module.exports = (opts) => {
 
     aliases.si.some((k) => {
       if (isDeclared(k)) {
-        si = opts[k];
+        si = opts![k] as boolean;
         return true;
       }
       return false;
@@ -110,14 +153,14 @@ module.exports = (opts) => {
 
     aliases.handleError.some((k) => {
       if (isDeclared(k)) {
-        handleError = opts[k];
+        handleError = opts![k] as boolean;
         return true;
       }
       return false;
     });
 
     aliases.cors.forEach((k) => {
-      if (isDeclared(k) && opts[k]) {
+      if (isDeclared(k) && opts![k]) {
         handleOptionsMethod = true;
         headers["Access-Control-Allow-Origin"] = "*";
         headers["Access-Control-Allow-Headers"] =
@@ -127,21 +170,22 @@ module.exports = (opts) => {
 
     aliases.headers.forEach((k) => {
       if (isDeclared(k)) {
-        if (Array.isArray(opts[k])) {
-          opts[k].forEach(setHeader);
-        } else if (opts[k] && typeof opts[k] === "object") {
-          Object.keys(opts[k]).forEach((key) => {
-            headers[key] = opts[k][key];
+        const val = opts![k];
+        if (Array.isArray(val)) {
+          (val as string[]).forEach(setHeader);
+        } else if (val && typeof val === "object") {
+          Object.keys(val).forEach((key) => {
+            headers[key] = (val as Record<string, string>)[key];
           });
         } else {
-          setHeader(opts[k]);
+          setHeader(val as string);
         }
       }
     });
 
     aliases.contentType.some((k) => {
       if (isDeclared(k)) {
-        contentType = opts[k];
+        contentType = opts![k] as string;
         return true;
       }
       return false;
@@ -149,7 +193,7 @@ module.exports = (opts) => {
 
     aliases.mimeType.some((k) => {
       if (isDeclared(k)) {
-        mimeTypes = opts[k];
+        mimeTypes = opts![k] as string | Record<string, string>;
         return true;
       }
       return false;
@@ -157,7 +201,7 @@ module.exports = (opts) => {
 
     aliases.weakEtags.some((k) => {
       if (isDeclared(k)) {
-        weakEtags = opts[k];
+        weakEtags = opts![k] as boolean;
         return true;
       }
       return false;
@@ -165,7 +209,7 @@ module.exports = (opts) => {
 
     aliases.weakCompare.some((k) => {
       if (isDeclared(k)) {
-        weakCompare = opts[k];
+        weakCompare = opts![k] as boolean;
         return true;
       }
       return false;
@@ -173,7 +217,7 @@ module.exports = (opts) => {
 
     aliases.handleOptionsMethod.some((k) => {
       if (isDeclared(k)) {
-        handleOptionsMethod = handleOptionsMethod || opts[k];
+        handleOptionsMethod = handleOptionsMethod || (opts![k] as boolean);
         return true;
       }
       return false;

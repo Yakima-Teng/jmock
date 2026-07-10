@@ -1,20 +1,22 @@
 #!/usr/bin/env node
 
-"use strict";
+import chalk from "chalk";
+import os from "node:os";
+import { createServer } from "../lib/jmock.ts";
+import portfinder from "portfinder";
+import opener from "opener";
+import fs from "node:fs";
+import url from "node:url";
+import minimist from "minimist";
+import readline from "node:readline";
+import pkg from "../package.json" with { type: "json" };
 
-var chalk = require("chalk"),
-  os = require("os"),
-  jmock = require("../lib/jmock"),
-  portfinder = require("portfinder"),
-  opener = require("opener"),
-  fs = require("fs"),
-  url = require("url");
-var argv = require("minimist")(process.argv.slice(2), {
+const argv = minimist(process.argv.slice(2), {
   alias: {
     tls: "ssl",
   },
 });
-var ifaces = os.networkInterfaces();
+const ifaces = os.networkInterfaces();
 
 process.title = "jmock";
 
@@ -67,17 +69,17 @@ if (argv.h || argv.help) {
   process.exit();
 }
 
-var port = argv.p || argv.port || parseInt(process.env.PORT, 10),
-  host = argv.a || "0.0.0.0",
-  tls = argv.S || argv.tls,
-  sslPassphrase = process.env.NODE_JMOCK_SSL_PASSPHRASE,
-  proxy = argv.P || argv.proxy,
-  proxyOptions = argv["proxy-options"],
-  utc = argv.U || argv.utc,
-  version = argv.v || argv.version,
-  logger;
+const port = argv.p || argv.port || parseInt(process.env.PORT, 10);
+const host = argv.a || "0.0.0.0";
+const tls = argv.S || argv.tls;
+const sslPassphrase = process.env.NODE_JMOCK_SSL_PASSPHRASE;
+const proxy = argv.P || argv.proxy;
+const proxyOptions = argv["proxy-options"];
+const utc = argv.U || argv.utc;
+const version = argv.v || argv.version;
+let logger;
 
-var proxyOptionsBooleanProps = [
+const proxyOptionsBooleanProps = [
   "ws",
   "xfwd",
   "secure",
@@ -102,8 +104,8 @@ if (!argv.s && !argv.silent) {
   logger = {
     info: console.log,
     request: function (req, res, error) {
-      var date = utc ? new Date().toUTCString() : new Date();
-      var ip = argv["log-ip"]
+      const date = utc ? new Date().toUTCString() : new Date();
+      const ip = argv["log-ip"]
         ? req.headers["x-forwarded-for"] || "" + req.connection.remoteAddress
         : "";
       if (error) {
@@ -136,7 +138,7 @@ if (!argv.s && !argv.silent) {
 }
 
 if (version) {
-  logger.info("v" + require("../package.json").version);
+  logger.info("v" + pkg.version);
   process.exit();
 }
 
@@ -153,7 +155,7 @@ if (!port) {
 }
 
 function listen(port) {
-  var options = {
+  const options = {
     root: argv._[0],
     config: argv.config,
     cache: argv.c,
@@ -213,9 +215,9 @@ function listen(port) {
     }
   }
 
-  var server = jmock.createServer(options);
+  const server = createServer(options);
   server.listen(port, host, function () {
-    var protocol = tls ? "https://" : "http://";
+    const protocol = tls ? "https://" : "http://";
 
     logger.info(
       [
@@ -226,10 +228,7 @@ function listen(port) {
     );
 
     logger.info(
-      [
-        chalk.yellow("\njmock version: "),
-        chalk.cyan(require("../package.json").version),
-      ].join(""),
+      [chalk.yellow("\njmock version: "), chalk.cyan(pkg.version)].join(""),
     );
 
     logger.info(
@@ -326,13 +325,12 @@ function listen(port) {
       opener(openUrl);
     }
 
-    // Spacing before logs
     if (!argv.s) logger.info();
   });
 }
 
 if (process.platform === "win32") {
-  require("readline")
+  readline
     .createInterface({
       input: process.stdin,
       output: process.stdout,

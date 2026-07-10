@@ -1,9 +1,10 @@
-"use strict";
+import { describe, it } from "node:test";
+import assert from "node:assert";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const { describe, it } = require("node:test");
-const assert = require("node:assert");
-const fs = require("fs");
-const path = require("path");
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 describe("project structure", () => {
   const rootDir = path.join(__dirname, "..");
@@ -29,17 +30,17 @@ describe("project structure", () => {
 });
 
 describe("jmock module loads", () => {
-  it("jmock module loads without error", () => {
-    assert.doesNotThrow(() => {
-      require("../lib/jmock");
+  it("jmock module loads without error", async () => {
+    assert.doesNotThrow(async () => {
+      await import("../lib/jmock.ts");
     }, "jmock module loads without error");
   });
 });
 
 describe("config loads", () => {
-  it("jmock.config loads without error", () => {
-    assert.doesNotThrow(() => {
-      require("../jmock.config");
+  it("jmock.config loads without error", async () => {
+    assert.doesNotThrow(async () => {
+      await import("../jmock.config.mjs");
     }, "jmock.config loads without error");
   });
 });
