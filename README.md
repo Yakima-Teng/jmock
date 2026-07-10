@@ -210,9 +210,7 @@ npm run lint
 
 ## 截图
 
-|               启动界面               |                 目录浏览                 |
-| :----------------------------------: | :--------------------------------------: |
-| ![启动界面](./screenshots/start.png) | ![目录浏览](./screenshots/directory.png) |
+![启动界面](./screenshots/screenshot.png)
 
 ## 致谢
 
