@@ -26,15 +26,17 @@
     "start": "node ./bin/jmock -p 8081 --config",
     "test": "node --test test/*.test.ts",
     "test-watch": "node --test --watch test/*.test.ts",
-    "deploy:github": "bash bash/github-deploy.sh",
-    "deploy:qiniu": "node build/deploy.mjs",
-    "deploy:npm": "npm --registry=https://registry.npmjs.org publish",
-    "deploy": "npm run deploy:qiniu && npm run deploy:github && npm run deploy:npm",
+    "lint": "npm run format && npm run lint:code && npm run lint:markdown && npm run typecheck && npm run test",
     "lint:markdown": "markdownlint-cli2",
     "format": "prettier . --write",
     "lint:code": "eslint . --fix",
     "typecheck": "tsc --noEmit",
-    "lint": "npm run format && npm run lint:code && npm run lint:markdown && npm run typecheck && npm run test"
+    "release-major": "standard-version --release-as major",
+    "release-minor": "standard-version --release-as minor",
+    "release-patch": "standard-version --release-as patch",
+    "deploy:tags": "git push --follow-tags origin main",
+    "deploy:npm": "node ./scripts/deploy-npm.ts",
+    "deploy": "node --run deploy:tags && node --run deploy:npm"
   },
   "files": [
     "lib",
