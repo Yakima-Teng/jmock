@@ -11,7 +11,6 @@ import Mock from "mockjs";
 import coBody from "co-body";
 import secureCompare from "secure-compare";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { getError, logError } from "nsuite";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const require = createRequire(import.meta.url);
@@ -90,20 +89,15 @@ class Jmock {
     this.jmockConfig = {};
     const jmockConfigFileName = "jmock.config.mjs";
     const jmockConfigPath = path.join(process.cwd(), jmockConfigFileName);
-    try {
-      // eslint-disable-next-line no-sync
-      fs.lstatSync("./" + jmockConfigFileName);
+    if (fs.existsSync("./" + jmockConfigFileName)) {
       this.jmockConfig = require(jmockConfigPath) as JmockConfig;
-    } catch (err) {
-      logError(`Error in Jmock constructor: ${getError(err).message}`);
-      if (options.config === true) {
-        // eslint-disable-next-line no-sync
-        fs.copyFileSync(
-          path.join(__dirname, "../" + jmockConfigFileName),
-          jmockConfigPath,
-        );
-        this.jmockConfig = require(jmockConfigPath) as JmockConfig;
-      }
+    } else if (options.config === true) {
+      // eslint-disable-next-line no-sync
+      fs.copyFileSync(
+        path.join(__dirname, "../" + jmockConfigFileName),
+        jmockConfigPath,
+      );
+      this.jmockConfig = require(jmockConfigPath) as JmockConfig;
     }
     const proxyTable = (this.jmockConfig as JmockConfig).proxyTable || {};
     const mockTable = (this.jmockConfig as JmockConfig).mockTable || {};
