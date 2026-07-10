@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = {
   // proxy your requests
   proxyTable: {
@@ -27,6 +29,7 @@ module.exports = {
           query,
           body,
           data: Mock.mock({
+            keysOfReq: Object.keys(req),
             // list is an array contains 1~10 elements
             "list|1-10": [
               {
@@ -39,7 +42,7 @@ module.exports = {
         message: "success",
       };
     },
-    "/api/world": async ({ req, query, body, method, Mock }) => {
+    "/api/world": async ({ query, body, method, Mock }) => {
       // delay reply after 300ms
       await new Promise((resolve) => {
         setTimeout(resolve, 300);

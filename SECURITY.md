@@ -10,4 +10,4 @@
 
 ## Reporting a Vulnerability
 
-In general, vulnerabilities can be reported as an issue, pull requests are very welcome. If you'd like to report privately, please email yakima.public@gmail.com.
+In general, vulnerabilities can be reported as an issue, pull requests are very welcome. If you'd like to report privately, please email [yakima.public@gmail.com](yakima.public@gmail.com).

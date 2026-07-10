@@ -1,3 +1,5 @@
+"use strict";
+
 const t = require("tap");
 const fs = require("fs");
 const path = require("path");

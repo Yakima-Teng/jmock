@@ -2,8 +2,6 @@
 [![npm downloads](https://img.shields.io/npm/dm/jmock?color=blue&label=npm%20downloads&style=flat-square)](https://www.npmjs.com/package/jmock)
 [![license](https://img.shields.io/github/license/Yakima-Teng/jmock.svg?style=flat-square)](https://github.com/Yakima-Teng/jmock)
 
-[中文文档](./README_zh-CN.md)
-
 # jmock
 
 jmock is a simple command-line http server for mocking data, proxying requests and serving static files.
@@ -12,7 +10,7 @@ jmock is a simple command-line http server for mocking data, proxying requests a
 
 ## Installation
 
-#### Running on-demand:
+### Running on-demand
 
 Using `npx` you can run the script without installing it first:
 
@@ -20,7 +18,7 @@ Using `npx` you can run the script without installing it first:
 npx jmock [path] [options]
 ```
 
-#### Globally via `npm` (RECOMMENDED)
+### Globally via `npm` (RECOMMENDED)
 
 ```bash
 npm install --global jmock
@@ -28,7 +26,7 @@ npm install --global jmock
 
 This will install `jmock` globally so that it may be run from the command line anywhere.
 
-#### As a dependency in your `npm` package:
+### As a dependency in your `npm` package
 
 ```bash
 npm install jmock
@@ -42,7 +40,7 @@ jmock [path] [options]
 
 `[path]` defaults to `./public` if the folder exists, and `./` otherwise.
 
-Now you can visit http://localhost:8080 to view your server
+Now you can visit [http://localhost:8080](http://localhost:8080) to view your server
 
 **Use a specified port:**
 
