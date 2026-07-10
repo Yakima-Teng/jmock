@@ -4,3 +4,5 @@ npm-debug.log*
 .dir-locals.el
 .DS_Store
 /.idea
+.terminal.local.md
+AGENTS.LOCAL.md
