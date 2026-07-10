@@ -1,14 +1,12 @@
 {
-  "globs": [
-    "**/*.md"
-  ],
+  "globs": ["**/*.md"],
   "ignores": [],
   "config": {
     "default": true,
     "MD007": { "indent": 4 },
     "MD013": false,
     "MD033": false,
-    "MD041": false
+    "MD041": false,
   },
-  "gitignore": true
+  "gitignore": true,
 }
