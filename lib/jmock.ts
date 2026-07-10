@@ -110,15 +110,10 @@ class Jmock {
 
     if (options.root) {
       this.root = options.root;
+    } else if (fs.existsSync("./public")) {
+      this.root = "./public";
     } else {
-      try {
-        // eslint-disable-next-line no-sync
-        fs.lstatSync("./public");
-        this.root = "./public";
-      } catch (err) {
-        logError(`Error in lstatSync public: ${getError(err).message}`);
-        this.root = "./";
-      }
+      this.root = "./";
     }
 
     this.headers = options.headers || {};
