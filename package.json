@@ -29,9 +29,9 @@
     "deploy:qiniu": "node build/deploy.mjs",
     "deploy:npm": "npm --registry=https://registry.npmjs.org publish",
     "deploy": "npm run deploy:qiniu && npm run deploy:github && npm run deploy:npm",
-    "format": "prettier --write \"**/*.{js,json,md}\"",
-    "lint:code": "eslint lib/ bin/ jmock.config.js --fix",
     "lint:markdown": "markdownlint-cli2",
+    "format": "prettier . --write",
+    "lint:code": "eslint . --fix",
     "typecheck": "echo 'No TypeScript configuration found, skipping type check'",
     "lint": "npm run format && npm run lint:code && npm run lint:markdown && npm run typecheck && npm run test"
   },
@@ -74,11 +74,11 @@
   "devDependencies": {
     "better-deploy": "^0.0.15",
     "eol": "^0.9.1",
-    "eslint": "^4.19.1",
-    "eslint-config-populist": "^4.2.0",
+    "eslint": "8.57.1",
+    "eslint-config-prettier": "9.1.2",
     "express": "^4.17.1",
     "markdownlint-cli2": "^0.13.0",
-    "prettier": "^3.2.5",
+    "prettier": "3.9.5",
     "request": "^2.88.2",
     "tap": "^14.11.0"
   },
