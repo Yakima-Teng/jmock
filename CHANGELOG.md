@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/Yakima-Teng/jmock/compare/v2.0.0...v2.0.1) (2026-07-14)
+
+
+### Bug Fixes
+
+* 修正 deploy:tags 脚本推送分支为 master ([017edc0](https://github.com/Yakima-Teng/jmock/commit/017edc0c3b773438318ff15b97380e0a10c55eba))
+
 ## 2.0.0 (2026-07-10)
 
 ### Features
