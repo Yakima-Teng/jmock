@@ -1,3 +1,5 @@
+# jmock
+
 <p align="center" style="display: flex;align-items: center;justify-content: center;gap:8px;">
   <a href="https://npmcharts.com/compare/jmock?minimal=true">
     <img src="https://img.shields.io/npm/dm/jmock.svg" alt="Downloads">
@@ -10,11 +12,9 @@
   </a>
 </p>
 
-# jmock
+> jmock 一个简单易用的命令行 HTTP 服务器，支持数据模拟（Mock）、请求代理（Proxy）和静态文件服务。
 
-![项目截图](https://github.com/Yakima-Teng/jmock/blob/master/screenshots/screenshot.png?raw=true)
-
-jmock 一个简单易用的命令行 HTTP 服务器，支持数据模拟（Mock）、请求代理（Proxy）和静态文件服务。
+说明：本项目已开源，开源地址：[https://github.com/Yakima-Teng/jmock](https://github.com/Yakima-Teng/jmock)
 
 ## 特性
 
@@ -187,34 +187,6 @@ jmock --config
 ```
 
 将在当前目录生成 `jmock.config.mjs` 文件，内含详细的示例代码。
-
-## 开发
-
-```bash
-# 安装依赖
-npm install
-
-# 启动开发服务器（端口 8081，加载配置文件）
-npm start
-
-# 运行测试
-npm test
-
-# 监听模式运行测试
-npm run test-watch
-
-# 代码格式化
-npm run format
-
-# 代码检查
-npm run lint:code
-
-# 类型检查
-npm run typecheck
-
-# 全部检查（格式化 + lint + 类型检查 + 测试）
-npm run lint
-```
 
 ## 致谢
 
