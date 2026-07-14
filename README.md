@@ -1,10 +1,18 @@
-[![npm](https://img.shields.io/npm/v/jmock.svg?style=flat-square)](https://www.npmjs.com/package/jmock)
-[![npm downloads](https://img.shields.io/npm/dm/jmock?color=blue&label=npm%20downloads&style=flat-square)](https://www.npmjs.com/package/jmock)
-[![license](https://img.shields.io/github/license/Yakima-Teng/jmock.svg?style=flat-square)](https://github.com/Yakima-Teng/jmock)
+<p align="center" style="display: flex;align-items: center;justify-content: center;gap:8px;">
+  <a href="https://npmcharts.com/compare/jmock?minimal=true">
+    <img src="https://img.shields.io/npm/dm/jmock.svg" alt="Downloads">
+  </a>
+  <a href="https://www.npmjs.com/package/jmock">
+    <img src="https://img.shields.io/npm/v/jmock.svg" alt="Version">
+  </a>
+  <a href="https://www.npmjs.com/package/jmock">
+    <img src="https://img.shields.io/npm/l/jmock.svg" alt="License">
+  </a>
+</p>
 
 # jmock
 
-![项目截图](./screenshots/screenshot.png)
+![项目截图](https://github.com/Yakima-Teng/jmock/blob/master/screenshots/screenshot.png?raw=true)
 
 jmock 一个简单易用的命令行 HTTP 服务器，支持数据模拟（Mock）、请求代理（Proxy）和静态文件服务。
 
@@ -217,4 +225,4 @@ jmock 基于以下项目构建：
 
 ## 协议
 
-📄 [Apache License 2.0](./LICENSE)
+📄 [Apache License 2.0](https://github.com/Yakima-Teng/jmock/blob/master/LICENSE)
