@@ -67,7 +67,7 @@ jmock [path] [options]
 
 `[path]` defaults to `./public` (if it exists), otherwise `./`.
 
-After starting, visit [http://localhost:8080](http://localhost:8080) to view the server.
+After starting, visit `http://localhost:8080` to view the server.
 
 ### Options
 
